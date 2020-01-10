@@ -20,7 +20,10 @@ import model.*;
 public class Home extends javax.swing.JFrame {
     DataBase database = new DataBase();
     ArrayList<Department> departmentList = new ArrayList<>();
-    int state = 0;
+    int mode = 0;
+    // 1 for new entry
+    // 2 for edit
+    // 3 for delete
     /**
      * Creates new form Home
      */
@@ -151,6 +154,11 @@ public class Home extends javax.swing.JFrame {
         jButtonNew.setIcon(new javax.swing.ImageIcon("/Users/Regmi/Employee Manager/employeeManager/src/main/resources/add-button.png")); // NOI18N
         jButtonNew.setBorder(null);
         jButtonNew.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jButtonNew.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButtonNewMouseClicked(evt);
+            }
+        });
 
         jTable_Department.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -267,6 +275,7 @@ public class Home extends javax.swing.JFrame {
         TableModel model = jTable_Department.getModel();
         jTextName.setText(model.getValueAt(row, 0).toString());
         jTextEmployee.setText(model.getValueAt(row, 1).toString());
+        mode = 2;
     }//GEN-LAST:event_jTable_DepartmentMouseClicked
 
     private void jButtonSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSaveActionPerformed
@@ -276,6 +285,13 @@ public class Home extends javax.swing.JFrame {
     private void jButtonDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonDeleteActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButtonDeleteActionPerformed
+
+    private void jButtonNewMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButtonNewMouseClicked
+        jTextName.setText("");
+        jTextEmployee.setText("");
+        jTextName.grabFocus();
+        mode = 1;
+    }//GEN-LAST:event_jButtonNewMouseClicked
 
     private void populateDepartmentTable() {
         try {
