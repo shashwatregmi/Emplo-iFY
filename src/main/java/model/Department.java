@@ -11,13 +11,19 @@ package model;
  */
 public class Department {
     String name;
+    int numEmployees;
     
-    public Department(String name) {
+    public Department(String name, int numEmployees) {
         this.name = name;
+        this.numEmployees = numEmployees;
     }
     
     public String getName() {
         return name;
+    }
+    
+    public int getNumEmployees() {
+        return numEmployees;
     }
     
 }
