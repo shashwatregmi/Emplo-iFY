@@ -10,10 +10,12 @@ package model;
  * @author Regmi
  */
 public class Department {
+    int id;
     String name;
     int numEmployees;
     
-    public Department(String name, int numEmployees) {
+    public Department(int id, String name, int numEmployees) {
+        this.id = id;
         this.name = name;
         this.numEmployees = numEmployees;
     }
@@ -26,4 +28,7 @@ public class Department {
         return numEmployees;
     }
     
+        public int getID() {
+        return id;
+    }
 }
