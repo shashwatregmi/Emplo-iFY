@@ -21,6 +21,7 @@ public class Home extends javax.swing.JFrame {
     DataBase database = new DataBase();
     ArrayList<Department> departmentList = new ArrayList<>();
     int mode = 0;
+    int selectedID;
     // 1 for new entry
     // 2 for edit
     // 3 for delete
@@ -89,10 +90,14 @@ public class Home extends javax.swing.JFrame {
 
         jLabel2.setText("Number of Employees:");
 
-        jTextName.setText("jTextField1");
+        jTextName.setEnabled(false);
+        jTextName.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextNameActionPerformed(evt);
+            }
+        });
 
         jTextEmployee.setEditable(false);
-        jTextEmployee.setText("jTextField1");
         jTextEmployee.setEnabled(false);
 
         jButtonDelete.setIcon(new javax.swing.ImageIcon("/Users/Regmi/Employee Manager/employeeManager/src/main/resources/delete.png")); // NOI18N
@@ -105,6 +110,11 @@ public class Home extends javax.swing.JFrame {
 
         jButtonSave.setIcon(new javax.swing.ImageIcon("/Users/Regmi/Employee Manager/employeeManager/src/main/resources/save.png")); // NOI18N
         jButtonSave.setText("Save");
+        jButtonSave.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButtonSaveMouseClicked(evt);
+            }
+        });
         jButtonSave.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonSaveActionPerformed(evt);
@@ -275,6 +285,8 @@ public class Home extends javax.swing.JFrame {
         TableModel model = jTable_Department.getModel();
         jTextName.setText(model.getValueAt(row, 0).toString());
         jTextEmployee.setText(model.getValueAt(row, 1).toString());
+        jTextName.setEnabled(true);
+        selectedID = departmentList.get(row).getID();
         mode = 2;
     }//GEN-LAST:event_jTable_DepartmentMouseClicked
 
@@ -287,18 +299,54 @@ public class Home extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonDeleteActionPerformed
 
     private void jButtonNewMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButtonNewMouseClicked
+        jTextName.setEnabled(true);
         jTextName.setText("");
-        jTextEmployee.setText("");
+        jTextEmployee.setText("0");
         jTextName.grabFocus();
         mode = 1;
     }//GEN-LAST:event_jButtonNewMouseClicked
+
+    private void jButtonSaveMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButtonSaveMouseClicked
+        if (mode == 1) { //new entry
+            String sql = "insert into department " + " (name)" + " values ('" +
+                    jTextName.getText() + "')";
+            try {
+                database.getStatement().executeUpdate(sql);
+                departmentList = new ArrayList<>();
+                DefaultTableModel model = (DefaultTableModel)jTable_Department.getModel();
+                model.setRowCount(0);
+                populateDepartmentTable();
+                jTextName.setEnabled(false);
+            } catch (Exception e) {
+                System.out.println(e);
+            }
+        } else if (mode == 2) { // edit mode
+            String sql = "update department " + " set name = '" + jTextName.getText() + "'" 
+                    + " where department_id=" + selectedID;
+            try {
+                database.getStatement().execute(sql);
+                departmentList = new ArrayList<>();
+                DefaultTableModel model = (DefaultTableModel)jTable_Department.getModel();
+                model.setRowCount(0);
+                populateDepartmentTable();
+                jTextName.setEnabled(false);
+            } catch (Exception e) {
+                System.out.println(e);
+            }
+        }
+    }//GEN-LAST:event_jButtonSaveMouseClicked
+
+    private void jTextNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextNameActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextNameActionPerformed
 
     private void populateDepartmentTable() {
         try {
             ResultSet myrs = database.getStatement().executeQuery("select * from department");
             Department tableDepartment;
             while (myrs.next()){
-                tableDepartment = new Department(myrs.getString("name"), myrs.getInt("num_employees"));
+                tableDepartment = new Department(myrs.getInt("department_id"), 
+                        myrs.getString("name"), myrs.getInt("num_employees"));
                 departmentList.add(tableDepartment);
             }
         } catch (Exception e){
