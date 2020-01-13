@@ -21,6 +21,7 @@ import model.*;
 public class Home extends javax.swing.JFrame {
     DataBase database = new DataBase();
     ArrayList<Department> departmentList = new ArrayList<>();
+    ArrayList<Employee> employeeList = new ArrayList<>();
     int mode = 0;
     int selectedID;
     // 1 for new entry
@@ -31,7 +32,46 @@ public class Home extends javax.swing.JFrame {
      */
     public Home() {
         initComponents();
+        try {
+            ResultSet myrs = database.getStatement().executeQuery("select * from employee_detail");
+            Employee tableEmployee;
+            while (myrs.next()){
+                tableEmployee = new Employee(myrs.getInt("employee_id"), 
+                        myrs.getString("name"), myrs.getString("last_name"),
+                        myrs.getInt("dep_id"),myrs.getDate("hire_date"));
+                employeeList.add(tableEmployee);
+            }
+        } catch (Exception e){
+            System.out.println("Error");
+        }
         
+        try {
+            ResultSet myrs = database.getStatement().executeQuery("select * from department");
+            Department tableDepartment;
+            while (myrs.next()){
+                tableDepartment = new Department(myrs.getInt("department_id"), 
+                        myrs.getString("name"), myrs.getInt("num_employees"));
+                departmentList.add(tableDepartment);
+            }
+        } catch (Exception e){
+            System.out.println("Error");
+        }
+        
+        DefaultTableModel model = (DefaultTableModel)jTableEmpDetail.getModel();
+        model.setRowCount(0);
+        Object[] row = new Object[4];
+        for (int i = 0; i < employeeList.size(); i++) {
+            row[0] = employeeList.get(i).getFirstName();
+            row[1] = employeeList.get(i).getLastName();
+            int depID = employeeList.get(0).getDepID();
+            for (Department d: departmentList) {
+            if (d.getID() == depID) {
+                row[2] = d.getName();
+            }
+        }
+            row[3] = employeeList.get(i).getHireDate();
+            model.addRow(row);
+        }
     }
 
     /**
@@ -46,7 +86,7 @@ public class Home extends javax.swing.JFrame {
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jPanel1 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        jTableEmpDetail = new javax.swing.JTable();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
@@ -81,7 +121,7 @@ public class Home extends javax.swing.JFrame {
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        jTableEmpDetail.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -97,12 +137,12 @@ public class Home extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane2.setViewportView(jTable1);
-        if (jTable1.getColumnModel().getColumnCount() > 0) {
-            jTable1.getColumnModel().getColumn(0).setResizable(false);
-            jTable1.getColumnModel().getColumn(1).setResizable(false);
-            jTable1.getColumnModel().getColumn(2).setResizable(false);
-            jTable1.getColumnModel().getColumn(3).setResizable(false);
+        jScrollPane2.setViewportView(jTableEmpDetail);
+        if (jTableEmpDetail.getColumnModel().getColumnCount() > 0) {
+            jTableEmpDetail.getColumnModel().getColumn(0).setResizable(false);
+            jTableEmpDetail.getColumnModel().getColumn(1).setResizable(false);
+            jTableEmpDetail.getColumnModel().getColumn(2).setResizable(false);
+            jTableEmpDetail.getColumnModel().getColumn(3).setResizable(false);
         }
 
         jButton1.setIcon(new javax.swing.ImageIcon("/Users/Regmi/Employee Manager/employeeManager/src/main/resources/delete.png")); // NOI18N
@@ -145,7 +185,7 @@ public class Home extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(33, 33, 33)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 23, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
                     .addComponent(jButton2)
@@ -513,7 +553,7 @@ public class Home extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTabbedPane jTabbedPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable jTableEmpDetail;
     private javax.swing.JTable jTable_Department;
     private javax.swing.JTextField jTextEmployee;
     private javax.swing.JTextField jTextName;
