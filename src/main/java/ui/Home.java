@@ -137,6 +137,11 @@ public class Home extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        jTableEmpDetail.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTableEmpDetailMouseClicked(evt);
+            }
+        });
         jScrollPane2.setViewportView(jTableEmpDetail);
         if (jTableEmpDetail.getColumnModel().getColumnCount() > 0) {
             jTableEmpDetail.getColumnModel().getColumn(0).setResizable(false);
@@ -185,7 +190,7 @@ public class Home extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(33, 33, 33)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 23, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
                     .addComponent(jButton2)
@@ -480,6 +485,17 @@ public class Home extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    private void jTableEmpDetailMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableEmpDetailMouseClicked
+        int input = JOptionPane.showConfirmDialog(null, "Would you like to edit the selected record?", "Select an Option..." ,JOptionPane.YES_NO_CANCEL_OPTION);
+
+        if (input == 0){
+             EmployeeDetail employeeDetail = new EmployeeDetail();
+            employeeDetail.setVisible(true);
+            this.setVisible(false);
+        }
+    }//GEN-LAST:event_jTableEmpDetailMouseClicked
+
+    
     private void populateDepartmentTable() {
         try {
             ResultSet myrs = database.getStatement().executeQuery("select * from department");
