@@ -95,9 +95,9 @@ public class Home extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTableEmpDetail = new javax.swing.JTable();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        jButtonDeleteEmp = new javax.swing.JButton();
+        jButtonNewEmp = new javax.swing.JButton();
+        jButtonRep = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
@@ -158,24 +158,24 @@ public class Home extends javax.swing.JFrame {
             jTableEmpDetail.getColumnModel().getColumn(3).setResizable(false);
         }
 
-        jButton1.setIcon(new javax.swing.ImageIcon("/Users/Regmi/Employee Manager/employeeManager/src/main/resources/delete.png")); // NOI18N
-        jButton1.setText("Delete");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        jButtonDeleteEmp.setIcon(new javax.swing.ImageIcon("/Users/Regmi/Employee Manager/employeeManager/src/main/resources/delete.png")); // NOI18N
+        jButtonDeleteEmp.setText("Delete");
+        jButtonDeleteEmp.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                jButtonDeleteEmpActionPerformed(evt);
             }
         });
 
-        jButton2.setIcon(new javax.swing.ImageIcon("/Users/Regmi/Employee Manager/employeeManager/src/main/resources/create.png")); // NOI18N
-        jButton2.setText("New Employee");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        jButtonNewEmp.setIcon(new javax.swing.ImageIcon("/Users/Regmi/Employee Manager/employeeManager/src/main/resources/create.png")); // NOI18N
+        jButtonNewEmp.setText("New Employee");
+        jButtonNewEmp.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                jButtonNewEmpActionPerformed(evt);
             }
         });
 
-        jButton3.setIcon(new javax.swing.ImageIcon("/Users/Regmi/Employee Manager/employeeManager/src/main/resources/report.png")); // NOI18N
-        jButton3.setText("Reports");
+        jButtonRep.setIcon(new javax.swing.ImageIcon("/Users/Regmi/Employee Manager/employeeManager/src/main/resources/report.png")); // NOI18N
+        jButtonRep.setText("Reports");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -185,11 +185,11 @@ public class Home extends javax.swing.JFrame {
                 .addGap(25, 25, 25)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jButton3)
+                        .addComponent(jButtonRep)
                         .addGap(272, 272, 272)
-                        .addComponent(jButton1)
+                        .addComponent(jButtonDeleteEmp)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton2))
+                        .addComponent(jButtonNewEmp))
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 841, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(44, Short.MAX_VALUE))
         );
@@ -200,9 +200,9 @@ public class Home extends javax.swing.JFrame {
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 23, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2)
-                    .addComponent(jButton3))
+                    .addComponent(jButtonDeleteEmp)
+                    .addComponent(jButtonNewEmp)
+                    .addComponent(jButtonRep))
                 .addGap(23, 23, 23))
         );
 
@@ -486,39 +486,46 @@ public class Home extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextNameActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void jButtonNewEmpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNewEmpActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_jButtonNewEmpActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        String sql = "delete from employee_detail where employee_id = " + selectedempID;
-        try {
-            int dep = employeeList.get(selectedrow).getDepID();
-            for (Department d: departmentList){
-                if (d.getID() == dep) {
-                    int i = d.getNumEmployees();
-                    i = i - 1;
-                    String depsql = "UPDATE department SET num_employees = " + Integer.toString(i)
-                    + " WHERE department_id = " + Integer.toString(d.getID());
-                        try {
-                            database.getStatement().execute(depsql);
-                            d.setNumEmployees(i);
-                        } catch (Exception e) {
-                            System.out.println(e);
-                        }
-                        database.getStatement().execute(sql);
-                        employeeList = new ArrayList<>();
-                        DefaultTableModel model = (DefaultTableModel)jTableEmpDetail.getModel();
-                        model.setRowCount(0);
-                        populateEmpTable();
-                }
+    private void jButtonDeleteEmpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonDeleteEmpActionPerformed
+        int input = JOptionPane.showConfirmDialog(null, "Would you like to delete the selected employee record?", "Select an Option..." ,JOptionPane.YES_NO_CANCEL_OPTION);
+        if (input == 0) {
+            try {
+                deleteEmp();
+                JOptionPane.showMessageDialog(null, "The Employee record has been deleted!", "Attention", JOptionPane.INFORMATION_MESSAGE);
+                populateEmpTable();
+            } catch (Exception e) {
+                System.out.println(e);
             }
-            JOptionPane.showMessageDialog(null, "The Employee record has been deleted!", "Attention", JOptionPane.INFORMATION_MESSAGE);
-        } catch (Exception e) {
-            System.out.println(e);
         }
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_jButtonDeleteEmpActionPerformed
 
+    private void deleteEmp() throws Exception{
+       String sql = "delete from employee_detail where employee_id = " + selectedempID;
+        int dep = employeeList.get(selectedrow).getDepID();
+        for (Department d: departmentList){
+            if (d.getID() == dep) {
+                int i = d.getNumEmployees();
+                i = i - 1;
+                String depsql = "UPDATE department SET num_employees = " + Integer.toString(i)
+                + " WHERE department_id = " + Integer.toString(d.getID());
+                    try {
+                        database.getStatement().execute(depsql);
+                        d.setNumEmployees(i);
+                    } catch (Exception e) {
+                        System.out.println(e);
+                    }
+                    database.getStatement().execute(sql);
+                    employeeList = new ArrayList<>();
+                    DefaultTableModel model = (DefaultTableModel)jTableEmpDetail.getModel();
+                    model.setRowCount(0);
+            }
+        }
+    }
+    
     private void jTableEmpDetailMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableEmpDetailMouseClicked
         int row = jTableEmpDetail.getSelectedRow();
         selectedempID = employeeList.get(row).getID();
@@ -591,11 +598,11 @@ public class Home extends javax.swing.JFrame {
     }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
     private javax.swing.JButton jButtonDelete;
+    private javax.swing.JButton jButtonDeleteEmp;
     private javax.swing.JButton jButtonNew;
+    private javax.swing.JButton jButtonNewEmp;
+    private javax.swing.JButton jButtonRep;
     private javax.swing.JButton jButtonSave;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
