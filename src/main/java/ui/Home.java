@@ -24,6 +24,9 @@ public class Home extends javax.swing.JFrame {
     ArrayList<Employee> employeeList = new ArrayList<>();
     int mode = 0;
     int selectedID;
+    int selectedempID;
+    
+    //modes
     // 1 for new entry
     // 2 for edit
     // 3 for delete
@@ -50,7 +53,7 @@ public class Home extends javax.swing.JFrame {
             Department tableDepartment;
             while (myrs.next()){
                 tableDepartment = new Department(myrs.getInt("department_id"), 
-                        myrs.getString("name"), myrs.getInt("num_employees"));
+                myrs.getString("name"), myrs.getInt("num_employees"));
                 departmentList.add(tableDepartment);
             }
         } catch (Exception e){
@@ -72,6 +75,7 @@ public class Home extends javax.swing.JFrame {
             row[3] = employeeList.get(i).getHireDate();
             model.addRow(row);
         }
+        departmentList = new ArrayList<>();
     }
 
     /**
@@ -418,7 +422,7 @@ public class Home extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Department cannot be deleted if it is still associated with an employee.", "Error", JOptionPane.ERROR_MESSAGE);
         } else {
             mode = 3;
-        String sql = "delete from department where department_id = " + selectedID;
+            String sql = "delete from department where department_id = " + selectedID;
         try {
             database.getStatement().execute(sql);
             departmentList = new ArrayList<>();
@@ -482,17 +486,28 @@ public class Home extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
+        String sql = "delete from employee_detail where employee_id = " + selectedempID;
+        try {
+            database.getStatement().execute(sql);
+            employeeList = new ArrayList<>();
+            DefaultTableModel model = (DefaultTableModel)jTableEmpDetail.getModel();
+            model.setRowCount(0);
+            JOptionPane.showMessageDialog(null, "Department has been deleted!", "Attention", JOptionPane.INFORMATION_MESSAGE);
+        } catch (Exception e) {
+            System.out.println("Error");
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jTableEmpDetailMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableEmpDetailMouseClicked
+        int row = jTableEmpDetail.getSelectedRow();
+        selectedempID = employeeList.get(row).getID();
         int input = JOptionPane.showConfirmDialog(null, "Would you like to edit the selected record?", "Select an Option..." ,JOptionPane.YES_NO_CANCEL_OPTION);
-
         if (input == 0){
              EmployeeDetail employeeDetail = new EmployeeDetail();
             employeeDetail.setVisible(true);
             this.setVisible(false);
         }
+        
     }//GEN-LAST:event_jTableEmpDetailMouseClicked
 
     
