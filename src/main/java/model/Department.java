@@ -5,6 +5,9 @@
  */
 package model;
 
+import java.util.ArrayList;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author Regmi
@@ -28,7 +31,11 @@ public class Department {
         return numEmployees;
     }
     
-        public int getID() {
+    public void setNumEmployees(int i) {
+        numEmployees = i;
+    }
+    
+    public int getID() {
         return id;
     }
 }

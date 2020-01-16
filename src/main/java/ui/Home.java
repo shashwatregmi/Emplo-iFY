@@ -25,6 +25,7 @@ public class Home extends javax.swing.JFrame {
     int mode = 0;
     int selectedID;
     int selectedempID;
+    int selectedrow;
     
     //modes
     // 1 for new entry
@@ -35,7 +36,11 @@ public class Home extends javax.swing.JFrame {
      */
     public Home() {
         initComponents();
-        try {
+        populateEmpTable();
+    }
+    
+    public void populateEmpTable() {
+         try {
             ResultSet myrs = database.getStatement().executeQuery("select * from employee_detail");
             Employee tableEmployee;
             while (myrs.next()){
@@ -75,7 +80,6 @@ public class Home extends javax.swing.JFrame {
             row[3] = employeeList.get(i).getHireDate();
             model.addRow(row);
         }
-        departmentList = new ArrayList<>();
     }
 
     /**
@@ -394,7 +398,8 @@ public class Home extends javax.swing.JFrame {
     }//GEN-LAST:event_jTabbedPane1MouseClicked
 
     private void jTabbedPane1StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jTabbedPane1StateChanged
-        if (jTabbedPane1.getSelectedIndex() == 1){
+        if (jTabbedPane1.getSelectedIndex() == 1) {
+            departmentList = new ArrayList<>();
             populateDepartmentTable();
         } else {
             departmentList = new ArrayList<>();
@@ -488,19 +493,36 @@ public class Home extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         String sql = "delete from employee_detail where employee_id = " + selectedempID;
         try {
-            database.getStatement().execute(sql);
-            employeeList = new ArrayList<>();
-            DefaultTableModel model = (DefaultTableModel)jTableEmpDetail.getModel();
-            model.setRowCount(0);
-            JOptionPane.showMessageDialog(null, "Department has been deleted!", "Attention", JOptionPane.INFORMATION_MESSAGE);
+            int dep = employeeList.get(selectedrow).getDepID();
+            for (Department d: departmentList){
+                if (d.getID() == dep) {
+                    int i = d.getNumEmployees();
+                    i = i - 1;
+                    String depsql = "UPDATE department SET num_employees = " + Integer.toString(i)
+                    + " WHERE department_id = " + Integer.toString(d.getID());
+                        try {
+                            database.getStatement().execute(depsql);
+                            d.setNumEmployees(i);
+                        } catch (Exception e) {
+                            System.out.println(e);
+                        }
+                        database.getStatement().execute(sql);
+                        employeeList = new ArrayList<>();
+                        DefaultTableModel model = (DefaultTableModel)jTableEmpDetail.getModel();
+                        model.setRowCount(0);
+                        populateEmpTable();
+                }
+            }
+            JOptionPane.showMessageDialog(null, "The Employee record has been deleted!", "Attention", JOptionPane.INFORMATION_MESSAGE);
         } catch (Exception e) {
-            System.out.println("Error");
+            System.out.println(e);
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jTableEmpDetailMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableEmpDetailMouseClicked
         int row = jTableEmpDetail.getSelectedRow();
         selectedempID = employeeList.get(row).getID();
+        selectedrow = row;
         int input = JOptionPane.showConfirmDialog(null, "Would you like to edit the selected record?", "Select an Option..." ,JOptionPane.YES_NO_CANCEL_OPTION);
         if (input == 0){
              EmployeeDetail employeeDetail = new EmployeeDetail();
