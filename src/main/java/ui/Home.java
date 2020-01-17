@@ -168,6 +168,11 @@ public class Home extends javax.swing.JFrame {
 
         jButtonNewEmp.setIcon(new javax.swing.ImageIcon("/Users/Regmi/Employee Manager/employeeManager/src/main/resources/create.png")); // NOI18N
         jButtonNewEmp.setText("New Employee");
+        jButtonNewEmp.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButtonNewEmpMouseClicked(evt);
+            }
+        });
         jButtonNewEmp.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonNewEmpActionPerformed(evt);
@@ -176,6 +181,11 @@ public class Home extends javax.swing.JFrame {
 
         jButtonRep.setIcon(new javax.swing.ImageIcon("/Users/Regmi/Employee Manager/employeeManager/src/main/resources/report.png")); // NOI18N
         jButtonRep.setText("Reports");
+        jButtonRep.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButtonRepMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -487,7 +497,7 @@ public class Home extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextNameActionPerformed
 
     private void jButtonNewEmpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNewEmpActionPerformed
-        // TODO add your handling code here:
+       
     }//GEN-LAST:event_jButtonNewEmpActionPerformed
 
     private void jButtonDeleteEmpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonDeleteEmpActionPerformed
@@ -532,12 +542,24 @@ public class Home extends javax.swing.JFrame {
         selectedrow = row;
         int input = JOptionPane.showConfirmDialog(null, "Would you like to edit the selected record?", "Select an Option..." ,JOptionPane.YES_NO_CANCEL_OPTION);
         if (input == 0){
-             EmployeeDetail employeeDetail = new EmployeeDetail();
+            EmployeeDetail employeeDetail = new EmployeeDetail();
             employeeDetail.setVisible(true);
             this.setVisible(false);
         }
         
     }//GEN-LAST:event_jTableEmpDetailMouseClicked
+
+    private void jButtonRepMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButtonRepMouseClicked
+        Reports report = new Reports();
+        report.setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_jButtonRepMouseClicked
+
+    private void jButtonNewEmpMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButtonNewEmpMouseClicked
+        EmployeeDetail employeeDetail = new EmployeeDetail();
+        employeeDetail.setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_jButtonNewEmpMouseClicked
 
     
     private void populateDepartmentTable() {

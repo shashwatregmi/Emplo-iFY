@@ -177,6 +177,7 @@
                 <Property name="text" type="java.lang.String" value="New Employee"/>
               </Properties>
               <Events>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jButtonNewEmpMouseClicked"/>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonNewEmpActionPerformed"/>
               </Events>
             </Component>
@@ -187,6 +188,9 @@
                 </Property>
                 <Property name="text" type="java.lang.String" value="Reports"/>
               </Properties>
+              <Events>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jButtonRepMouseClicked"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>
