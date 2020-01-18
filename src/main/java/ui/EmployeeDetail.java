@@ -110,6 +110,8 @@ public class EmployeeDetail extends javax.swing.JFrame {
 
         jLabel3.setText("Employee ID:");
 
+        jTextField1.setEnabled(false);
+
         jLabel4.setText("First Name:");
 
         jLabel5.setText("Last Name:");
