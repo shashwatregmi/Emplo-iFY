@@ -5,17 +5,24 @@
  */
 package ui;
 
+import model.Employee;
+
 /**
  *
  * @author Regmi
  */
 public class EmployeeDetail extends javax.swing.JFrame {
-
+    Employee employee;
     /**
      * Creates new form EmployeeDetail
+     * @param emp
      */
-    public EmployeeDetail() {
+    public EmployeeDetail(Employee emp, int mode) {
         initComponents();
+        if (mode == 2) {
+            employee = emp; 
+            jTextField1.setText(Integer.toString(emp.getID()));
+        }     
     }
 
     /**
@@ -447,7 +454,7 @@ public class EmployeeDetail extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new EmployeeDetail().setVisible(true);
+                new EmployeeDetail(null, 1).setVisible(true);
             }
         });
     }

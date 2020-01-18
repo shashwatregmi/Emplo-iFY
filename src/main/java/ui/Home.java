@@ -542,7 +542,7 @@ public class Home extends javax.swing.JFrame {
         selectedrow = row;
         int input = JOptionPane.showConfirmDialog(null, "Would you like to edit the selected record?", "Select an Option..." ,JOptionPane.YES_NO_CANCEL_OPTION);
         if (input == 0){
-            EmployeeDetail employeeDetail = new EmployeeDetail();
+            EmployeeDetail employeeDetail = new EmployeeDetail(employeeList.get(row), 2);
             employeeDetail.setVisible(true);
             this.setVisible(false);
         }
@@ -556,7 +556,7 @@ public class Home extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonRepMouseClicked
 
     private void jButtonNewEmpMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButtonNewEmpMouseClicked
-        EmployeeDetail employeeDetail = new EmployeeDetail();
+        EmployeeDetail employeeDetail = new EmployeeDetail(null, 1);
         employeeDetail.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_jButtonNewEmpMouseClicked
