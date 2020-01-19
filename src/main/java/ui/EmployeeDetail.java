@@ -7,6 +7,7 @@ package ui;
 
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import javax.swing.DefaultComboBoxModel;
 import model.Department;
 import model.*;
 
@@ -37,6 +38,12 @@ public class EmployeeDetail extends javax.swing.JFrame {
         } catch (Exception e){
             System.out.println("Error");
         }
+        
+        jComboBox1.removeAllItems();
+        for (int i = 0; i < departmentsList.size(); i++) {
+             jComboBox1.addItem(departmentsList.get(i).getName());
+        }
+        
         
         if (mode == 2) {
             employee = emp; 
@@ -455,7 +462,9 @@ public class EmployeeDetail extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MouseClicked
-        // TODO add your handling code here:
+        Home home = new Home();
+        home.setVisible(true);
+        this.setVisible(false);
     }//GEN-LAST:event_jButton2MouseClicked
 
     private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
