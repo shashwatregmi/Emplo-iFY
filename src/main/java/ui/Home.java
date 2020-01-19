@@ -43,14 +43,22 @@ public class Home extends javax.swing.JFrame {
          try {
             ResultSet myrs = database.getStatement().executeQuery("select * from employee_detail");
             Employee tableEmployee;
-            while (myrs.next()){
+            while (myrs.next()) {
                 tableEmployee = new Employee(myrs.getInt("employee_id"), 
                         myrs.getString("name"), myrs.getString("last_name"),
-                        myrs.getInt("dep_id"),myrs.getDate("hire_date"));
+                        myrs.getDate("date_of_birth"), myrs.getInt("sin"), myrs.getInt("dep_id"),
+                        myrs.getInt("phone"), myrs.getString("link"), myrs.getInt("monday"),
+                        myrs.getInt("tuesday"), myrs.getInt("wednesday"), myrs.getInt("thursday"),
+                        myrs.getInt("friday"), myrs.getInt("saturday"), myrs.getInt("sunday"), myrs.getInt("remote"),
+                        myrs.getString("gender"), myrs.getInt("emp_type"), myrs.getString("designation"),
+                        myrs.getInt("pay_type"), myrs.getDouble("pay"), myrs.getDate("hire_date"),
+                        myrs.getInt("sickdays_aval"), myrs.getInt("resigned"), myrs.getInt("fired"),
+                        myrs.getString("note"));
+                
                 employeeList.add(tableEmployee);
             }
-        } catch (Exception e){
-            System.out.println("Error");
+        } catch (Exception e) {
+            System.out.println(e);
         }
         
         try {

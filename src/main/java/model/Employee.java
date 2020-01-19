@@ -20,16 +20,16 @@ public class Employee {
     int dep_id;
     int phone;
     String email;
-    boolean mon, tues, weds, thurs, fri, sat, sun, remote;
+    int mon, tues, weds, thurs, fri, sat, sun, remote;
     String gender;
-    String emp_type;
+    int emp_type;
     String designation;
-    String pay_type;
-    int pay_amt;
+    int pay_type;
+    double pay_amt;
     Date hire_date;
     int sick_days;
-    boolean resign;
-    boolean fire;
+    int resign;
+    int fire;
     String note;
     
     public Employee(int id, String first_name, String last_name, int dep_id, Date hire_date){
@@ -41,9 +41,9 @@ public class Employee {
     }
     
     public Employee(int id, String first_name, String last_name, Date dob, int sin, int dep_id, int phone,
-    String email, boolean mon, boolean tues, boolean weds, boolean thurs, boolean fri, boolean sat, boolean sun, boolean remote,
-    String gender, String emp_type, String designation, String pay_type, int pay_amt, Date hire_date, int sick_days,
-    boolean resign, boolean fire, String note) {
+    String email, int mon, int tues, int weds, int thurs, int fri, int sat, int sun, int remote,
+    String gender, int emp_type, String designation, int pay_type, double pay_amt, Date hire_date, int sick_days,
+    int resign, int fire, String note) {
         this.id = id;
         this.first_name = first_name;
         this.last_name = last_name;
@@ -138,67 +138,67 @@ public class Employee {
         this.email = email;
     }
 
-    public boolean isMon() {
+    public int isMon() {
         return mon;
     }
 
-    public void setMon(boolean mon) {
+    public void setMon(int mon) {
         this.mon = mon;
     }
 
-    public boolean isTues() {
+    public int isTues() {
         return tues;
     }
 
-    public void setTues(boolean tues) {
+    public void setTues(int tues) {
         this.tues = tues;
     }
 
-    public boolean isWeds() {
+    public int isWeds() {
         return weds;
     }
 
-    public void setWeds(boolean weds) {
+    public void setWeds(int weds) {
         this.weds = weds;
     }
 
-    public boolean isThurs() {
+    public int isThurs() {
         return thurs;
     }
 
-    public void setThurs(boolean thurs) {
+    public void setThurs(int thurs) {
         this.thurs = thurs;
     }
 
-    public boolean isFri() {
+    public int isFri() {
         return fri;
     }
 
-    public void setFri(boolean fri) {
+    public void setFri(int fri) {
         this.fri = fri;
     }
 
-    public boolean isSat() {
+    public int isSat() {
         return sat;
     }
 
-    public void setSat(boolean sat) {
+    public void setSat(int sat) {
         this.sat = sat;
     }
 
-    public boolean isSun() {
+    public int isSun() {
         return sun;
     }
 
-    public void setSun(boolean sun) {
+    public void setSun(int sun) {
         this.sun = sun;
     }
 
-    public boolean isRemote() {
+    public int isRemote() {
         return remote;
     }
 
-    public void setRemote(boolean remote) {
+    public void setRemote(int remote) {
         this.remote = remote;
     }
 
@@ -210,11 +210,11 @@ public class Employee {
         this.gender = gender;
     }
 
-    public String getEmp_type() {
+    public int getEmp_type() {
         return emp_type;
     }
 
-    public void setEmp_type(String emp_type) {
+    public void setEmp_type(int emp_type) {
         this.emp_type = emp_type;
     }
 
@@ -226,19 +226,19 @@ public class Employee {
         this.designation = designation;
     }
 
-    public String getPay_type() {
+    public int getPay_type() {
         return pay_type;
     }
 
-    public void setPay_type(String pay_type) {
+    public void setPay_type(int pay_type) {
         this.pay_type = pay_type;
     }
 
-    public int getPay_amt() {
+    public double getPay_amt() {
         return pay_amt;
     }
 
-    public void setPay_amt(int pay_amt) {
+    public void setPay_amt(double pay_amt) {
         this.pay_amt = pay_amt;
     }
 
@@ -255,19 +255,19 @@ public class Employee {
         this.sick_days = sick_days;
     }
 
-    public boolean isResign() {
+    public int isResign() {
         return resign;
     }
 
-    public void setResign(boolean resign) {
+    public void setResign(int resign) {
         this.resign = resign;
     }
 
-    public boolean isFire() {
+    public int isFire() {
         return fire;
     }
 
-    public void setFire(boolean fire) {
+    public void setFire(int fire) {
         this.fire = fire;
     }
 
