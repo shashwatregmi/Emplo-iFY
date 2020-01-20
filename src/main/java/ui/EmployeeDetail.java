@@ -6,6 +6,8 @@
 package ui;
 
 import java.sql.ResultSet;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import javax.swing.DefaultComboBoxModel;
 import model.Department;
@@ -19,6 +21,9 @@ import model.*;
 public class EmployeeDetail extends javax.swing.JFrame {
     Employee employee;
     ArrayList<Department> departmentsList = new ArrayList<>();
+    ArrayList<String> empType = new ArrayList<>();
+    ArrayList<String> payType = new ArrayList<>();
+    private int deptindex;
     
     /**
      * Creates new form EmployeeDetail
@@ -42,14 +47,78 @@ public class EmployeeDetail extends javax.swing.JFrame {
         jComboBox1.removeAllItems();
         for (int i = 0; i < departmentsList.size(); i++) {
              jComboBox1.addItem(departmentsList.get(i).getName());
+             if (emp.getDepID() == departmentsList.get(i).getID()){
+                 deptindex = i;
+             }
         }
         
+        empType.add("Full Time");
+        empType.add("Part Time");
+        empType.add("Contractor");
+        empType.add("Intern");
         
-        if (mode == 2) {
+        jComboBox2.removeAllItems();
+        for (int i = 0; i < empType.size(); i++) {
+             jComboBox2.addItem(empType.get(i));
+        }
+        
+        payType.add("Annually");
+        payType.add("Hourly");
+        payType.add("Other");
+        jComboBox3.removeAllItems();
+        for (int i = 0; i < payType.size(); i++) {
+             jComboBox3.addItem(payType.get(i));
+        }
+        
+        if (mode == 2) { // edit mode
             employee = emp; 
             jTextempid.setText(Integer.toString(emp.getID()));
             jTextfirstname.setText(emp.getFirstName());
+            jTextlastname.setText(emp.getLastName());
+            DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
+            String dob = df.format(emp.getDob());
+            jTextdob.setText(dob);
+            jTextsin.setText(Integer.toString(emp.getSin()));
+            jComboBox1.setSelectedIndex(deptindex);
+            jTextphone.setText(Integer.toString(emp.getPhone()));
+            jtextEmail.setText(emp.getEmail());
+            if (emp.isMon() == 1) jCheckBoxmon.setSelected(rootPaneCheckingEnabled);
+            if (emp.isTues()== 1) jCheckBoxtues.setSelected(rootPaneCheckingEnabled);
+            if (emp.isWeds()== 1) jCheckBoxweds.setSelected(rootPaneCheckingEnabled);
+            if (emp.isThurs()== 1) jCheckBoxthurs.setSelected(rootPaneCheckingEnabled);
+            if (emp.isFri()== 1) jCheckBoxfri.setSelected(rootPaneCheckingEnabled);
+            if (emp.isSat()== 1) jCheckBoxsat.setSelected(rootPaneCheckingEnabled);
+            if (emp.isSun()== 1) jCheckBoxsun.setSelected(rootPaneCheckingEnabled);
+            if (emp.isRemote()== 1) jCheckBoxcall.setSelected(rootPaneCheckingEnabled);
+            jTextField9.setText(emp.getGender());
+            if (emp.getEmp_type()== 0) { // full time
+                jComboBox2.setSelectedIndex(0);
+            } else if (emp.getEmp_type()== 1) { // part time
+                jComboBox2.setSelectedIndex(1);
+            } else if (emp.getEmp_type()== 2) { //contract
+                jComboBox2.setSelectedIndex(2);
+            } else if (emp.getEmp_type()== 3) { //intern
+                jComboBox2.setSelectedIndex(3);
+            }
+            jTextField11.setText(emp.getDesignation());
+            if (emp.getPay_type()== 0) { // annual
+                jComboBox3.setSelectedIndex(0);
+            } else if (emp.getPay_type()== 1) { // hour
+                jComboBox3.setSelectedIndex(1);
+            } else if (emp.getPay_type()== 2) { //other
+                jComboBox3.setSelectedIndex(2);
+            } 
+            jTextField13.setText(Double.toString(emp.getPay_amt()));
+            DateFormat df2 = new SimpleDateFormat("MM/dd/yyyy");
+            String hire = df.format(emp.getHireDate());
+            jTextField14.setText(hire);
+            jTextField15.setText(Integer.toString(emp.getSick_days()));
+            jTextArea1.setText(emp.getNote());
+            if (emp.isFire() == 1) jRadioButton2.setSelected(rootPaneCheckingEnabled);
+            if (emp.isResign()== 1) jRadioButton1.setSelected(rootPaneCheckingEnabled);
         }     
+        
+        jTextfirstname.grabFocus();
     }
 
     /**
@@ -342,19 +411,15 @@ public class EmployeeDetail extends javax.swing.JFrame {
                                             .addComponent(jTextphone, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 247, javax.swing.GroupLayout.PREFERRED_SIZE)
                                             .addComponent(jtextEmail, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 247, javax.swing.GroupLayout.PREFERRED_SIZE))
                                         .addGap(214, 214, 214)))
+                                .addGap(14, 14, 14)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jTextField15)
                                     .addGroup(jPanel1Layout.createSequentialGroup()
                                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jRadioButton1)
-                                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                                .addGap(14, 14, 14)
-                                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                    .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 247, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                    .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, 247, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                                        .addGap(0, 0, Short.MAX_VALUE))
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addGap(14, 14, 14)
-                                        .addComponent(jTextField15)))))
+                                            .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 247, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, 247, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(jRadioButton1))
+                                        .addGap(0, 0, Short.MAX_VALUE)))))
                         .addGap(22, 22, 22))))
         );
         jPanel1Layout.setVerticalGroup(
