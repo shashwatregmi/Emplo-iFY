@@ -29,4 +29,8 @@ public class DataBase {
     public Statement getStatement() {
         return dbStat;
     }
+    
+    public Connection getconn() {
+        return dbConnect;
+    }
 }

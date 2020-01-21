@@ -5,7 +5,7 @@
  */
 package ui;
 
-import java.sql.ResultSet;
+import java.sql.*;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -23,7 +23,10 @@ public class EmployeeDetail extends javax.swing.JFrame {
     ArrayList<Department> departmentsList = new ArrayList<>();
     ArrayList<String> empType = new ArrayList<>();
     ArrayList<String> payType = new ArrayList<>();
+    ArrayList<Employee> employeeList = new ArrayList<>();
     private int deptindex;
+    int maxID;
+    int mode;
     
     /**
      * Creates new form EmployeeDetail
@@ -31,6 +34,7 @@ public class EmployeeDetail extends javax.swing.JFrame {
      */
     public EmployeeDetail(Employee emp, int mode) {
         initComponents();
+        this.mode = mode;
         DataBase database = new DataBase();
         try {
             ResultSet myrs = database.getStatement().executeQuery("select * from department");
@@ -47,8 +51,10 @@ public class EmployeeDetail extends javax.swing.JFrame {
         jComboBox1.removeAllItems();
         for (int i = 0; i < departmentsList.size(); i++) {
              jComboBox1.addItem(departmentsList.get(i).getName());
-             if (emp.getDepID() == departmentsList.get(i).getID()){
-                 deptindex = i;
+             if (mode == 2) {
+                if (emp.getDepID() == departmentsList.get(i).getID()){
+                    deptindex = i;
+                }
              }
         }
         
@@ -71,6 +77,27 @@ public class EmployeeDetail extends javax.swing.JFrame {
         }
         
         if (mode == 2) { // edit mode
+            loadData(emp);
+        } else if (mode == 1) { //new entry mode
+            getMaxPMKey();
+            jTextempid.setText(Integer.toString(maxID));
+        }
+        
+        jTextfirstname.grabFocus();
+    }
+    
+    private void getMaxPMKey() {
+        DataBase database_empload = new DataBase();
+            try {
+               ResultSet myrs = database_empload.getStatement().executeQuery("select MAX(employee_id) from employee_detail");
+               myrs.next();
+               maxID = Integer.parseInt(myrs.getObject(1).toString()) + 1;
+            } catch (Exception e){
+                System.out.println(e);
+            }
+    }
+    
+    private void loadData(Employee emp){
             employee = emp; 
             jTextempid.setText(Integer.toString(emp.getID()));
             jTextfirstname.setText(emp.getFirstName());
@@ -116,9 +143,6 @@ public class EmployeeDetail extends javax.swing.JFrame {
             jTextArea1.setText(emp.getNote());
             if (emp.isFire() == 1) jRadioButton2.setSelected(rootPaneCheckingEnabled);
             if (emp.isResign()== 1) jRadioButton1.setSelected(rootPaneCheckingEnabled);
-        }     
-        
-        jTextfirstname.grabFocus();
     }
 
     /**
@@ -533,9 +557,23 @@ public class EmployeeDetail extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton2MouseClicked
 
     private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
-        Home home = new Home();
-        home.setVisible(true);
-        this.setVisible(false);
+        if (mode == 2) {
+            DataBase database = new DataBase();
+            String sql = "UPDATE employee_detail SET name = ?, last_name = ?, gender = ?, date_of_birth = ?,"
+                    + "sin = ?, link = ?, pay_type = ?, dep_id = ?, pay = ?, designation = ?, monday = ?,"
+                    + "tuesday = ?, wednesday = ?, thursday = ?, friday = ?, saturday = ?, sundnay = ?, hire_date = ?,"
+                    + "sickdays_aval = ?, fired = ?, resigned = ?, emp_type = ?, note = ?, remote = ?, phone = ?,"
+                    + " WHERE employee_id = ?";            
+            try {
+               PreparedStatement update = database.getconn().prepareStatement(sql);
+               update.setString(1, jTextfirstname.toString());
+               update.setString(2, jTextlastname.toString());
+               update.setInt(26, employee.getID());
+               update.executeUpdate();
+            } catch (Exception e) {
+                System.out.println(e);
+            }
+        }
     }//GEN-LAST:event_jButton1MouseClicked
 
     /**
