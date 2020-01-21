@@ -18,7 +18,7 @@ public class Employee {
     Date dob;
     int sin;
     int dep_id;
-    int phone;
+    long phone;
     String email;
     int mon, tues, weds, thurs, fri, sat, sun, remote;
     String gender;
@@ -40,7 +40,7 @@ public class Employee {
         this.hire_date = hire_date;
     }
     
-    public Employee(int id, String first_name, String last_name, Date dob, int sin, int dep_id, int phone,
+    public Employee(int id, String first_name, String last_name, Date dob, int sin, int dep_id, long phone,
     String email, int mon, int tues, int weds, int thurs, int fri, int sat, int sun, int remote,
     String gender, int emp_type, String designation, int pay_type, double pay_amt, Date hire_date, int sick_days,
     int resign, int fire, String note) {
@@ -122,11 +122,11 @@ public class Employee {
         this.dep_id = dep_id;
     }
 
-    public int getPhone() {
+    public long getPhone() {
         return phone;
     }
 
-    public void setPhone(int phone) {
+    public void setPhone(long phone) {
         this.phone = phone;
     }
 

@@ -111,7 +111,7 @@ public class EmployeeDetail extends javax.swing.JFrame {
             jTextdob.setText(dob);
             jTextsin.setText(Integer.toString(emp.getSin()));
             jComboBoxDep.setSelectedIndex(deptindex);
-            jTextphone.setText(Integer.toString(emp.getPhone()));
+            jTextphone.setText(Long.toString(emp.getPhone()));
             jtextEmail.setText(emp.getEmail());
             if (emp.isMon() == 1) jCheckBoxmon.setSelected(rootPaneCheckingEnabled);
             if (emp.isTues()== 1) jCheckBoxtues.setSelected(rootPaneCheckingEnabled);
@@ -148,16 +148,7 @@ public class EmployeeDetail extends javax.swing.JFrame {
             if (emp.isFire() == 1) jRadioButtonfire.setSelected(rootPaneCheckingEnabled);
             if (emp.isResign()== 1) jRadioButtonresign.setSelected(rootPaneCheckingEnabled);
             
-            DataBase database = new DataBase();
-            Department empDept = departmentsList.get(deptindex);
-            empDept.setNumEmployees(empDept.getNumEmployees()-1);
-            String sqldep = "update department " + " set num_employees = " + empDept.getNumEmployees() + "" 
-                    + " where department_id = " + empDept.getID();
-            try {
-                database.getStatement().execute(sqldep);
-            } catch (Exception e) {
-                System.out.println(e);
-            }
+            
     }
 
     /**
@@ -595,7 +586,15 @@ public class EmployeeDetail extends javax.swing.JFrame {
                     + "tuesday = ?, wednesday = ?, thursday = ?, friday = ?, saturday = ?, sunday = ?, hire_date = ?,"
                     + "sickdays_aval = ?, fired = ?, resigned = ?, emp_type = ?, note = ?, remote = ?, phone = ?"
                     + " WHERE employee_id = ?";  
-            
+            Department empDept = departmentsList.get(deptindex);
+            empDept.setNumEmployees(empDept.getNumEmployees()-1);
+            String sqldep = "update department " + " set num_employees = " + empDept.getNumEmployees() + "" 
+                    + " where department_id = " + empDept.getID();
+            try {
+                database.getStatement().execute(sqldep);
+            } catch (Exception e) {
+                System.out.println(e);
+            }
             updateTable(sql, database);
             JOptionPane.showMessageDialog(null, "Employee Data Updated Sucessfully", "Sucess!", JOptionPane.INFORMATION_MESSAGE);
             jButtonBackMouseClicked(evt);
@@ -664,7 +663,7 @@ public class EmployeeDetail extends javax.swing.JFrame {
         update.setInt(22, jComboBoxEmpType.getSelectedIndex());
         update.setString(23, jTextAreanote.getText());
         if (jCheckBoxcall.isSelected()) update.setInt(24, 1); else update.setInt(24, 0);
-        update.setInt(25, Integer.parseInt(jTextphone.getText()));
+        update.setLong(25, Long.parseLong(jTextphone.getText()));
         update.setInt(26, Integer.parseInt(jTextempid.getText()));
    }
     

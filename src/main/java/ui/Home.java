@@ -47,7 +47,7 @@ public class Home extends javax.swing.JFrame {
                 tableEmployee = new Employee(myrs.getInt("employee_id"), 
                         myrs.getString("name"), myrs.getString("last_name"),
                         myrs.getDate("date_of_birth"), myrs.getInt("sin"), myrs.getInt("dep_id"),
-                        myrs.getInt("phone"), myrs.getString("link"), myrs.getInt("monday"),
+                        myrs.getLong("phone"), myrs.getString("link"), myrs.getInt("monday"),
                         myrs.getInt("tuesday"), myrs.getInt("wednesday"), myrs.getInt("thursday"),
                         myrs.getInt("friday"), myrs.getInt("saturday"), myrs.getInt("sunday"), myrs.getInt("remote"),
                         myrs.getString("gender"), myrs.getInt("emp_type"), myrs.getString("designation"),
@@ -522,17 +522,15 @@ public class Home extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonDeleteEmpActionPerformed
 
     private void deleteEmp() throws Exception{
-       String sql = "delete from employee_detail where employee_id = " + selectedempID;
+        String sql = "delete from employee_detail where employee_id = " + selectedempID;
         int dep = employeeList.get(selectedrow).getDepID();
         for (Department d: departmentList){
             if (d.getID() == dep) {
-                int i = d.getNumEmployees();
-                i = i - 1;
-                String depsql = "UPDATE department SET num_employees = " + Integer.toString(i)
-                + " WHERE department_id = " + Integer.toString(d.getID());
+                d.setNumEmployees(d.getNumEmployees()-1);
+                String depsql = "UPDATE department SET num_employees = " + d.getNumEmployees()
+                + " WHERE department_id = " + d.getID();
                     try {
                         database.getStatement().execute(depsql);
-                        d.setNumEmployees(i);
                     } catch (Exception e) {
                         System.out.println(e);
                     }
