@@ -8,8 +8,10 @@ package ui;
 import java.sql.*;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JOptionPane;
 import model.Department;
 import model.*;
 
@@ -48,13 +50,14 @@ public class EmployeeDetail extends javax.swing.JFrame {
             System.out.println("Error");
         }
         
-        jComboBox1.removeAllItems();
+        jComboBoxDep.removeAllItems();
         for (int i = 0; i < departmentsList.size(); i++) {
-             jComboBox1.addItem(departmentsList.get(i).getName());
+             jComboBoxDep.addItem(departmentsList.get(i).getName());
              if (mode == 2) {
                 if (emp.getDepID() == departmentsList.get(i).getID()){
                     deptindex = i;
                 }
+                
              }
         }
         
@@ -63,17 +66,17 @@ public class EmployeeDetail extends javax.swing.JFrame {
         empType.add("Contractor");
         empType.add("Intern");
         
-        jComboBox2.removeAllItems();
+        jComboBoxEmpType.removeAllItems();
         for (int i = 0; i < empType.size(); i++) {
-             jComboBox2.addItem(empType.get(i));
+             jComboBoxEmpType.addItem(empType.get(i));
         }
         
         payType.add("Annually");
         payType.add("Hourly");
         payType.add("Other");
-        jComboBox3.removeAllItems();
+        jComboBoxPayType.removeAllItems();
         for (int i = 0; i < payType.size(); i++) {
-             jComboBox3.addItem(payType.get(i));
+             jComboBoxPayType.addItem(payType.get(i));
         }
         
         if (mode == 2) { // edit mode
@@ -106,7 +109,7 @@ public class EmployeeDetail extends javax.swing.JFrame {
             String dob = df.format(emp.getDob());
             jTextdob.setText(dob);
             jTextsin.setText(Integer.toString(emp.getSin()));
-            jComboBox1.setSelectedIndex(deptindex);
+            jComboBoxDep.setSelectedIndex(deptindex);
             jTextphone.setText(Integer.toString(emp.getPhone()));
             jtextEmail.setText(emp.getEmail());
             if (emp.isMon() == 1) jCheckBoxmon.setSelected(rootPaneCheckingEnabled);
@@ -117,32 +120,32 @@ public class EmployeeDetail extends javax.swing.JFrame {
             if (emp.isSat()== 1) jCheckBoxsat.setSelected(rootPaneCheckingEnabled);
             if (emp.isSun()== 1) jCheckBoxsun.setSelected(rootPaneCheckingEnabled);
             if (emp.isRemote()== 1) jCheckBoxcall.setSelected(rootPaneCheckingEnabled);
-            jTextField9.setText(emp.getGender());
+            jTextFieldgender.setText(emp.getGender());
             if (emp.getEmp_type()== 0) { // full time
-                jComboBox2.setSelectedIndex(0);
+                jComboBoxEmpType.setSelectedIndex(0);
             } else if (emp.getEmp_type()== 1) { // part time
-                jComboBox2.setSelectedIndex(1);
+                jComboBoxEmpType.setSelectedIndex(1);
             } else if (emp.getEmp_type()== 2) { //contract
-                jComboBox2.setSelectedIndex(2);
+                jComboBoxEmpType.setSelectedIndex(2);
             } else if (emp.getEmp_type()== 3) { //intern
-                jComboBox2.setSelectedIndex(3);
+                jComboBoxEmpType.setSelectedIndex(3);
             }
-            jTextField11.setText(emp.getDesignation());
+            jTextFielddesign.setText(emp.getDesignation());
             if (emp.getPay_type()== 0) { // annual
-                jComboBox3.setSelectedIndex(0);
+                jComboBoxPayType.setSelectedIndex(0);
             } else if (emp.getPay_type()== 1) { // hour
-                jComboBox3.setSelectedIndex(1);
+                jComboBoxPayType.setSelectedIndex(1);
             } else if (emp.getPay_type()== 2) { //other
-                jComboBox3.setSelectedIndex(2);
+                jComboBoxPayType.setSelectedIndex(2);
             } 
-            jTextField13.setText(Double.toString(emp.getPay_amt()));
+            jTextFieldpay.setText(Double.toString(emp.getPay_amt()));
             DateFormat df2 = new SimpleDateFormat("MM/dd/yyyy");
             String hire = df.format(emp.getHireDate());
-            jTextField14.setText(hire);
-            jTextField15.setText(Integer.toString(emp.getSick_days()));
-            jTextArea1.setText(emp.getNote());
-            if (emp.isFire() == 1) jRadioButton2.setSelected(rootPaneCheckingEnabled);
-            if (emp.isResign()== 1) jRadioButton1.setSelected(rootPaneCheckingEnabled);
+            jTextFieldhire.setText(hire);
+            jTextFieldsick.setText(Integer.toString(emp.getSick_days()));
+            jTextAreanote.setText(emp.getNote());
+            if (emp.isFire() == 1) jRadioButtonfire.setSelected(rootPaneCheckingEnabled);
+            if (emp.isResign()== 1) jRadioButtonresign.setSelected(rootPaneCheckingEnabled);
     }
 
     /**
@@ -157,7 +160,7 @@ public class EmployeeDetail extends javax.swing.JFrame {
         jLabel20 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
+        jButtonSave = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jTextempid = new javax.swing.JTextField();
@@ -185,27 +188,27 @@ public class EmployeeDetail extends javax.swing.JFrame {
         jCheckBoxsat = new javax.swing.JCheckBox();
         jCheckBoxcall = new javax.swing.JCheckBox();
         jLabel12 = new javax.swing.JLabel();
-        jTextField9 = new javax.swing.JTextField();
+        jTextFieldgender = new javax.swing.JTextField();
         jLabel13 = new javax.swing.JLabel();
-        jTextField11 = new javax.swing.JTextField();
+        jTextFielddesign = new javax.swing.JTextField();
         jLabel14 = new javax.swing.JLabel();
         jLabel15 = new javax.swing.JLabel();
-        jTextField13 = new javax.swing.JTextField();
+        jTextFieldpay = new javax.swing.JTextField();
         jLabel16 = new javax.swing.JLabel();
-        jTextField14 = new javax.swing.JTextField();
+        jTextFieldhire = new javax.swing.JTextField();
         jLabel17 = new javax.swing.JLabel();
-        jTextField15 = new javax.swing.JTextField();
+        jTextFieldsick = new javax.swing.JTextField();
         jLabel18 = new javax.swing.JLabel();
         jLabel19 = new javax.swing.JLabel();
-        jButton2 = new javax.swing.JButton();
+        jButtonBack = new javax.swing.JButton();
         jLabel21 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
-        jRadioButton1 = new javax.swing.JRadioButton();
-        jRadioButton2 = new javax.swing.JRadioButton();
-        jComboBox1 = new javax.swing.JComboBox<>();
-        jComboBox2 = new javax.swing.JComboBox<>();
-        jComboBox3 = new javax.swing.JComboBox<>();
+        jTextAreanote = new javax.swing.JTextArea();
+        jRadioButtonresign = new javax.swing.JRadioButton();
+        jRadioButtonfire = new javax.swing.JRadioButton();
+        jComboBoxDep = new javax.swing.JComboBox<>();
+        jComboBoxEmpType = new javax.swing.JComboBox<>();
+        jComboBoxPayType = new javax.swing.JComboBox<>();
         jLabel1 = new javax.swing.JLabel();
 
         jLabel20.setText("jLabel20");
@@ -217,11 +220,11 @@ public class EmployeeDetail extends javax.swing.JFrame {
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
-        jButton1.setIcon(new javax.swing.ImageIcon("/Users/Regmi/Employee Manager/employeeManager/src/main/resources/save.png")); // NOI18N
-        jButton1.setText("Save");
-        jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
+        jButtonSave.setIcon(new javax.swing.ImageIcon("/Users/Regmi/Employee Manager/employeeManager/src/main/resources/save.png")); // NOI18N
+        jButtonSave.setText("Save");
+        jButtonSave.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jButton1MouseClicked(evt);
+                jButtonSaveMouseClicked(evt);
             }
         });
 
@@ -237,6 +240,12 @@ public class EmployeeDetail extends javax.swing.JFrame {
         jLabel5.setText("Last Name:");
 
         jLabel6.setText("Date of Birth:");
+
+        jTextdob.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextdobActionPerformed(evt);
+            }
+        });
 
         jLabel7.setText("SIN:");
 
@@ -332,33 +341,43 @@ public class EmployeeDetail extends javax.swing.JFrame {
 
         jLabel19.setText("Inactive:");
 
-        jButton2.setIcon(new javax.swing.ImageIcon("/Users/Regmi/Employee Manager/employeeManager/src/main/resources/exit.png")); // NOI18N
-        jButton2.setText("Back");
-        jButton2.addMouseListener(new java.awt.event.MouseAdapter() {
+        jButtonBack.setIcon(new javax.swing.ImageIcon("/Users/Regmi/Employee Manager/employeeManager/src/main/resources/exit.png")); // NOI18N
+        jButtonBack.setText("Back");
+        jButtonBack.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jButton2MouseClicked(evt);
+                jButtonBackMouseClicked(evt);
             }
         });
 
         jLabel21.setText("Note:");
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jTextArea1.setBorder(null);
-        jScrollPane1.setViewportView(jTextArea1);
+        jTextAreanote.setColumns(20);
+        jTextAreanote.setRows(5);
+        jTextAreanote.setBorder(null);
+        jScrollPane1.setViewportView(jTextAreanote);
 
-        jRadioButton1.setText("Resigned/Other");
+        jRadioButtonresign.setText("Resigned/Other");
 
-        jRadioButton2.setText("Fired");
+        jRadioButtonfire.setText("Fired");
 
-        jComboBox1.setBackground(new java.awt.Color(255, 255, 255));
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBoxDep.setBackground(new java.awt.Color(255, 255, 255));
+        jComboBoxDep.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBoxDep.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBoxDepActionPerformed(evt);
+            }
+        });
+        jComboBoxDep.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                jComboBoxDepPropertyChange(evt);
+            }
+        });
 
-        jComboBox2.setBackground(new java.awt.Color(255, 255, 255));
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBoxEmpType.setBackground(new java.awt.Color(255, 255, 255));
+        jComboBoxEmpType.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
-        jComboBox3.setBackground(new java.awt.Color(255, 255, 255));
-        jComboBox3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBoxPayType.setBackground(new java.awt.Color(255, 255, 255));
+        jComboBoxPayType.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -376,20 +395,20 @@ public class EmployeeDetail extends javax.swing.JFrame {
                                 .addGap(18, 18, 18)
                                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(jButtonBack, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                                 .addGap(0, 0, Short.MAX_VALUE)
-                                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(jButtonSave, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(584, 584, 584)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jTextField9)
-                                    .addComponent(jTextField11)
-                                    .addComponent(jTextField13)
-                                    .addComponent(jTextField14)
+                                    .addComponent(jTextFieldgender)
+                                    .addComponent(jTextFielddesign)
+                                    .addComponent(jTextFieldpay)
+                                    .addComponent(jTextFieldhire)
                                     .addGroup(jPanel1Layout.createSequentialGroup()
                                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                            .addComponent(jRadioButton2)
+                                            .addComponent(jRadioButtonfire)
                                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                         .addGap(3, 3, 3))))
                             .addGroup(jPanel1Layout.createSequentialGroup()
@@ -429,7 +448,7 @@ public class EmployeeDetail extends javax.swing.JFrame {
                                         .addGap(109, 109, 109)
                                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addComponent(jTextsin, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 247, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(jComboBox1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 247, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                            .addComponent(jComboBoxDep, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 247, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addComponent(jTextphone, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 247, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -437,12 +456,12 @@ public class EmployeeDetail extends javax.swing.JFrame {
                                         .addGap(214, 214, 214)))
                                 .addGap(14, 14, 14)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jTextField15)
+                                    .addComponent(jTextFieldsick)
                                     .addGroup(jPanel1Layout.createSequentialGroup()
                                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 247, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, 247, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(jRadioButton1))
+                                            .addComponent(jComboBoxEmpType, javax.swing.GroupLayout.PREFERRED_SIZE, 247, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(jComboBoxPayType, javax.swing.GroupLayout.PREFERRED_SIZE, 247, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(jRadioButtonresign))
                                         .addGap(0, 0, Short.MAX_VALUE)))))
                         .addGap(22, 22, 22))))
         );
@@ -456,51 +475,51 @@ public class EmployeeDetail extends javax.swing.JFrame {
                     .addComponent(jLabel3)
                     .addComponent(jTextempid, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel12)
-                    .addComponent(jTextField9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jTextFieldgender, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
                     .addComponent(jTextfirstname)
                     .addComponent(jLabel13)
-                    .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jComboBoxEmpType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
                     .addComponent(jTextlastname)
                     .addComponent(jLabel14)
-                    .addComponent(jTextField11))
+                    .addComponent(jTextFielddesign))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
                     .addComponent(jTextdob)
                     .addComponent(jLabel15)
-                    .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jComboBoxPayType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel7)
                     .addComponent(jTextsin)
                     .addComponent(jLabel16)
-                    .addComponent(jTextField13))
+                    .addComponent(jTextFieldpay))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel8)
                         .addComponent(jLabel17)
-                        .addComponent(jTextField14))
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jTextFieldhire))
+                    .addComponent(jComboBoxDep, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel9)
                     .addComponent(jTextphone)
                     .addComponent(jLabel18)
-                    .addComponent(jTextField15))
+                    .addComponent(jTextFieldsick))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel10)
                     .addComponent(jtextEmail)
                     .addComponent(jLabel19)
-                    .addComponent(jRadioButton1)
-                    .addComponent(jRadioButton2))
+                    .addComponent(jRadioButtonresign)
+                    .addComponent(jRadioButtonfire))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -508,9 +527,9 @@ public class EmployeeDetail extends javax.swing.JFrame {
                     .addComponent(jLabel21)
                     .addComponent(jScrollPane1))
                 .addGap(33, 33, 33)
-                .addComponent(jButton1)
+                .addComponent(jButtonSave)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton2)
+                .addComponent(jButtonBack)
                 .addGap(14, 14, 14))
         );
 
@@ -550,31 +569,81 @@ public class EmployeeDetail extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MouseClicked
+    private void jButtonBackMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButtonBackMouseClicked
         Home home = new Home();
         home.setVisible(true);
         this.setVisible(false);
-    }//GEN-LAST:event_jButton2MouseClicked
+    }//GEN-LAST:event_jButtonBackMouseClicked
 
-    private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
+    private void jButtonSaveMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButtonSaveMouseClicked
         if (mode == 2) {
             DataBase database = new DataBase();
             String sql = "UPDATE employee_detail SET name = ?, last_name = ?, gender = ?, date_of_birth = ?,"
                     + "sin = ?, link = ?, pay_type = ?, dep_id = ?, pay = ?, designation = ?, monday = ?,"
-                    + "tuesday = ?, wednesday = ?, thursday = ?, friday = ?, saturday = ?, sundnay = ?, hire_date = ?,"
-                    + "sickdays_aval = ?, fired = ?, resigned = ?, emp_type = ?, note = ?, remote = ?, phone = ?,"
-                    + " WHERE employee_id = ?";            
-            try {
-               PreparedStatement update = database.getconn().prepareStatement(sql);
-               update.setString(1, jTextfirstname.toString());
-               update.setString(2, jTextlastname.toString());
-               update.setInt(26, employee.getID());
-               update.executeUpdate();
-            } catch (Exception e) {
-                System.out.println(e);
-            }
+                    + "tuesday = ?, wednesday = ?, thursday = ?, friday = ?, saturday = ?, sunday = ?, hire_date = ?,"
+                    + "sickdays_aval = ?, fired = ?, resigned = ?, emp_type = ?, note = ?, remote = ?, phone = ?"
+                    + " WHERE employee_id = ?";  
+            
+            updateTable(sql, database);
+            JOptionPane.showMessageDialog(null, "Employee Data Updated Sucessfully", "Sucess!", JOptionPane.INFORMATION_MESSAGE);
+            jButtonBackMouseClicked(evt);
         }
-    }//GEN-LAST:event_jButton1MouseClicked
+    }//GEN-LAST:event_jButtonSaveMouseClicked
+
+   private void updateTable(String sql, DataBase database) {
+       try {
+            PreparedStatement update = database.getconn().prepareStatement(sql);
+            update.setString(1, jTextfirstname.getText());
+            update.setString(2, jTextlastname.getText());
+            update.setString(3, jTextFieldgender.getText());
+            SimpleDateFormat sdf1 = new SimpleDateFormat("MM/dd/YYYY");
+            java.util.Date date = sdf1.parse(jTextdob.getText());
+            java.sql.Date sqlStartDate = new java.sql.Date(date.getTime());
+            update.setDate(4, sqlStartDate);
+            update.setInt(5, Integer.parseInt(jTextsin.getText()));
+            update.setString(6, jtextEmail.getText());
+            update.setInt(7, jComboBoxPayType.getSelectedIndex());
+            int chosendep = jComboBoxDep.getSelectedIndex();
+            Department newChoice = departmentsList.get(chosendep);
+            update.setInt(8, newChoice.getID());
+            update.setDouble(9, Double.parseDouble(jTextFieldpay.getText()));
+            update.setString(10, jTextFielddesign.getText());
+            if (jCheckBoxmon.isSelected()) update.setInt(11, 1); else update.setInt(11, 0);
+            if (jCheckBoxtues.isSelected()) update.setInt(12, 1); else update.setInt(12, 0);
+            if (jCheckBoxweds.isSelected()) update.setInt(13, 1); else update.setInt(13, 0);
+            if (jCheckBoxthurs.isSelected()) update.setInt(14, 1); else update.setInt(14, 0);
+            if (jCheckBoxfri.isSelected()) update.setInt(15, 1); else update.setInt(15, 0);
+            if (jCheckBoxsat.isSelected()) update.setInt(16, 1); else update.setInt(16, 0);
+            if (jCheckBoxsun.isSelected()) update.setInt(17, 1); else update.setInt(17, 0);
+            sdf1 = new SimpleDateFormat("MM/dd/YYYY");
+            date = sdf1.parse(jTextFieldhire.getText());
+            sqlStartDate = new java.sql.Date(date.getTime());
+            update.setDate(18, sqlStartDate);
+            update.setInt(19, Integer.parseInt(jTextFieldsick.getText()));
+            if (jRadioButtonfire.isSelected()) update.setInt(20, 1); else update.setInt(20, 0);
+            if (jRadioButtonresign.isSelected()) update.setInt(21, 1); else update.setInt(21, 0);
+            update.setInt(22, jComboBoxEmpType.getSelectedIndex());
+            update.setString(23, jTextAreanote.getText());
+            if (jCheckBoxcall.isSelected()) update.setInt(24, 1); else update.setInt(24, 0);
+            update.setInt(25, Integer.parseInt(jTextphone.getText()));
+            update.setInt(26, employee.getID());
+            update.executeUpdate();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+   }
+    
+    private void jTextdobActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextdobActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextdobActionPerformed
+
+    private void jComboBoxDepActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxDepActionPerformed
+
+    }//GEN-LAST:event_jComboBoxDepActionPerformed
+
+    private void jComboBoxDepPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_jComboBoxDepPropertyChange
+
+    }//GEN-LAST:event_jComboBoxDepPropertyChange
 
     /**
      * @param args the command line arguments
@@ -612,8 +681,8 @@ public class EmployeeDetail extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButtonBack;
+    private javax.swing.JButton jButtonSave;
     private javax.swing.JCheckBox jCheckBoxcall;
     private javax.swing.JCheckBox jCheckBoxfri;
     private javax.swing.JCheckBox jCheckBoxmon;
@@ -622,9 +691,9 @@ public class EmployeeDetail extends javax.swing.JFrame {
     private javax.swing.JCheckBox jCheckBoxthurs;
     private javax.swing.JCheckBox jCheckBoxtues;
     private javax.swing.JCheckBox jCheckBoxweds;
-    private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JComboBox<String> jComboBox2;
-    private javax.swing.JComboBox<String> jComboBox3;
+    private javax.swing.JComboBox<String> jComboBoxDep;
+    private javax.swing.JComboBox<String> jComboBoxEmpType;
+    private javax.swing.JComboBox<String> jComboBoxPayType;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -649,15 +718,15 @@ public class EmployeeDetail extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
-    private javax.swing.JRadioButton jRadioButton1;
-    private javax.swing.JRadioButton jRadioButton2;
+    private javax.swing.JRadioButton jRadioButtonfire;
+    private javax.swing.JRadioButton jRadioButtonresign;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextArea jTextArea1;
-    private javax.swing.JTextField jTextField11;
-    private javax.swing.JTextField jTextField13;
-    private javax.swing.JTextField jTextField14;
-    private javax.swing.JTextField jTextField15;
-    private javax.swing.JTextField jTextField9;
+    private javax.swing.JTextArea jTextAreanote;
+    private javax.swing.JTextField jTextFielddesign;
+    private javax.swing.JTextField jTextFieldgender;
+    private javax.swing.JTextField jTextFieldhire;
+    private javax.swing.JTextField jTextFieldpay;
+    private javax.swing.JTextField jTextFieldsick;
     private javax.swing.JTextField jTextdob;
     private javax.swing.JTextField jTextempid;
     private javax.swing.JTextField jTextfirstname;
