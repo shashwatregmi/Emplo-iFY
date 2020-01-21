@@ -576,8 +576,8 @@ public class EmployeeDetail extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonBackMouseClicked
 
     private void jButtonSaveMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButtonSaveMouseClicked
+        DataBase database = new DataBase();
         if (mode == 2) {
-            DataBase database = new DataBase();
             String sql = "UPDATE employee_detail SET name = ?, last_name = ?, gender = ?, date_of_birth = ?,"
                     + "sin = ?, link = ?, pay_type = ?, dep_id = ?, pay = ?, designation = ?, monday = ?,"
                     + "tuesday = ?, wednesday = ?, thursday = ?, friday = ?, saturday = ?, sunday = ?, hire_date = ?,"
@@ -587,50 +587,63 @@ public class EmployeeDetail extends javax.swing.JFrame {
             updateTable(sql, database);
             JOptionPane.showMessageDialog(null, "Employee Data Updated Sucessfully", "Sucess!", JOptionPane.INFORMATION_MESSAGE);
             jButtonBackMouseClicked(evt);
+        } else if (mode == 1){
+            String sql = "INSERT into employee_detail (name, last_name, gender, date_of_birth,"
+                    + "sin, link, pay_type, dep_id, pay, designation, monday,"
+                    + "tuesday, wednesday, thursday, friday, saturday, sunday, hire_date,"
+                    + "sickdays_aval, fired, resigned, emp_type, note, remote, phone, employee_id)"
+                    + " values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";  
+            updateTable(sql, database);
+            JOptionPane.showMessageDialog(null, "New Employee Created!", "Sucess!", JOptionPane.INFORMATION_MESSAGE);
+            jButtonBackMouseClicked(evt);
         }
     }//GEN-LAST:event_jButtonSaveMouseClicked
 
    private void updateTable(String sql, DataBase database) {
        try {
             PreparedStatement update = database.getconn().prepareStatement(sql);
-            update.setString(1, jTextfirstname.getText());
-            update.setString(2, jTextlastname.getText());
-            update.setString(3, jTextFieldgender.getText());
-            SimpleDateFormat sdf1 = new SimpleDateFormat("MM/dd/YYYY");
-            java.util.Date date = sdf1.parse(jTextdob.getText());
-            java.sql.Date sqlStartDate = new java.sql.Date(date.getTime());
-            update.setDate(4, sqlStartDate);
-            update.setInt(5, Integer.parseInt(jTextsin.getText()));
-            update.setString(6, jtextEmail.getText());
-            update.setInt(7, jComboBoxPayType.getSelectedIndex());
-            int chosendep = jComboBoxDep.getSelectedIndex();
-            Department newChoice = departmentsList.get(chosendep);
-            update.setInt(8, newChoice.getID());
-            update.setDouble(9, Double.parseDouble(jTextFieldpay.getText()));
-            update.setString(10, jTextFielddesign.getText());
-            if (jCheckBoxmon.isSelected()) update.setInt(11, 1); else update.setInt(11, 0);
-            if (jCheckBoxtues.isSelected()) update.setInt(12, 1); else update.setInt(12, 0);
-            if (jCheckBoxweds.isSelected()) update.setInt(13, 1); else update.setInt(13, 0);
-            if (jCheckBoxthurs.isSelected()) update.setInt(14, 1); else update.setInt(14, 0);
-            if (jCheckBoxfri.isSelected()) update.setInt(15, 1); else update.setInt(15, 0);
-            if (jCheckBoxsat.isSelected()) update.setInt(16, 1); else update.setInt(16, 0);
-            if (jCheckBoxsun.isSelected()) update.setInt(17, 1); else update.setInt(17, 0);
-            sdf1 = new SimpleDateFormat("MM/dd/YYYY");
-            date = sdf1.parse(jTextFieldhire.getText());
-            sqlStartDate = new java.sql.Date(date.getTime());
-            update.setDate(18, sqlStartDate);
-            update.setInt(19, Integer.parseInt(jTextFieldsick.getText()));
-            if (jRadioButtonfire.isSelected()) update.setInt(20, 1); else update.setInt(20, 0);
-            if (jRadioButtonresign.isSelected()) update.setInt(21, 1); else update.setInt(21, 0);
-            update.setInt(22, jComboBoxEmpType.getSelectedIndex());
-            update.setString(23, jTextAreanote.getText());
-            if (jCheckBoxcall.isSelected()) update.setInt(24, 1); else update.setInt(24, 0);
-            update.setInt(25, Integer.parseInt(jTextphone.getText()));
-            update.setInt(26, employee.getID());
+            getData(update);
             update.executeUpdate();
         } catch (Exception e) {
             System.out.println(e);
         }
+   }
+   
+   private void getData(PreparedStatement update) throws Exception {
+        update.setString(1, jTextfirstname.getText());
+        update.setString(2, jTextlastname.getText());
+        update.setString(3, jTextFieldgender.getText());
+        SimpleDateFormat sdf1 = new SimpleDateFormat("MM/dd/YYYY");
+        java.util.Date date = sdf1.parse(jTextdob.getText());
+        java.sql.Date sqlStartDate = new java.sql.Date(date.getTime());
+        update.setDate(4, sqlStartDate);
+        update.setInt(5, Integer.parseInt(jTextsin.getText()));
+        update.setString(6, jtextEmail.getText());
+        update.setInt(7, jComboBoxPayType.getSelectedIndex());
+        int chosendep = jComboBoxDep.getSelectedIndex();
+        Department newChoice = departmentsList.get(chosendep);
+        update.setInt(8, newChoice.getID());
+        update.setDouble(9, Double.parseDouble(jTextFieldpay.getText()));
+        update.setString(10, jTextFielddesign.getText());
+        if (jCheckBoxmon.isSelected()) update.setInt(11, 1); else update.setInt(11, 0);
+        if (jCheckBoxtues.isSelected()) update.setInt(12, 1); else update.setInt(12, 0);
+        if (jCheckBoxweds.isSelected()) update.setInt(13, 1); else update.setInt(13, 0);
+        if (jCheckBoxthurs.isSelected()) update.setInt(14, 1); else update.setInt(14, 0);
+        if (jCheckBoxfri.isSelected()) update.setInt(15, 1); else update.setInt(15, 0);
+        if (jCheckBoxsat.isSelected()) update.setInt(16, 1); else update.setInt(16, 0);
+        if (jCheckBoxsun.isSelected()) update.setInt(17, 1); else update.setInt(17, 0);
+        sdf1 = new SimpleDateFormat("MM/dd/YYYY");
+        date = sdf1.parse(jTextFieldhire.getText());
+        sqlStartDate = new java.sql.Date(date.getTime());
+        update.setDate(18, sqlStartDate);
+        update.setInt(19, Integer.parseInt(jTextFieldsick.getText()));
+        if (jRadioButtonfire.isSelected()) update.setInt(20, 1); else update.setInt(20, 0);
+        if (jRadioButtonresign.isSelected()) update.setInt(21, 1); else update.setInt(21, 0);
+        update.setInt(22, jComboBoxEmpType.getSelectedIndex());
+        update.setString(23, jTextAreanote.getText());
+        if (jCheckBoxcall.isSelected()) update.setInt(24, 1); else update.setInt(24, 0);
+        update.setInt(25, Integer.parseInt(jTextphone.getText()));
+        update.setInt(26, Integer.parseInt(jTextempid.getText()));
    }
     
     private void jTextdobActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextdobActionPerformed

@@ -79,7 +79,7 @@ public class Home extends javax.swing.JFrame {
         for (int i = 0; i < employeeList.size(); i++) {
             row[0] = employeeList.get(i).getFirstName();
             row[1] = employeeList.get(i).getLastName();
-            int depID = employeeList.get(0).getDepID();
+            int depID = employeeList.get(i).getDepID();
             for (Department d: departmentList) {
             if (d.getID() == depID) {
                 row[2] = d.getName();
