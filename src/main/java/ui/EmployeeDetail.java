@@ -12,6 +12,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 import model.Department;
 import model.*;
 
@@ -146,6 +147,17 @@ public class EmployeeDetail extends javax.swing.JFrame {
             jTextAreanote.setText(emp.getNote());
             if (emp.isFire() == 1) jRadioButtonfire.setSelected(rootPaneCheckingEnabled);
             if (emp.isResign()== 1) jRadioButtonresign.setSelected(rootPaneCheckingEnabled);
+            
+            DataBase database = new DataBase();
+            Department empDept = departmentsList.get(deptindex);
+            empDept.setNumEmployees(empDept.getNumEmployees()-1);
+            String sqldep = "update department " + " set num_employees = " + empDept.getNumEmployees() + "" 
+                    + " where department_id = " + empDept.getID();
+            try {
+                database.getStatement().execute(sqldep);
+            } catch (Exception e) {
+                System.out.println(e);
+            }
     }
 
     /**
@@ -604,6 +616,16 @@ public class EmployeeDetail extends javax.swing.JFrame {
             PreparedStatement update = database.getconn().prepareStatement(sql);
             getData(update);
             update.executeUpdate();
+            int chosendep = jComboBoxDep.getSelectedIndex();
+            Department newChoice = departmentsList.get(chosendep);
+            newChoice.setNumEmployees(newChoice.getNumEmployees()+1);
+            String sqldep = "update department " + " set num_employees = " + newChoice.getNumEmployees() + "" 
+                    + " where department_id = " + newChoice.getID();
+            try {
+                database.getStatement().execute(sqldep);
+            } catch (Exception e) {
+                System.out.println(e);
+            }
         } catch (Exception e) {
             System.out.println(e);
         }
