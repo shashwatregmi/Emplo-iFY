@@ -124,6 +124,7 @@ public class Home extends javax.swing.JFrame {
 
         jTabbedPane1.setBackground(new java.awt.Color(255, 255, 255));
         jTabbedPane1.setToolTipText("");
+        jTabbedPane1.setFont(new java.awt.Font("Kefa", 2, 14)); // NOI18N
         jTabbedPane1.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
                 jTabbedPane1StateChanged(evt);
@@ -137,6 +138,7 @@ public class Home extends javax.swing.JFrame {
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
+        jTableEmpDetail.setFont(new java.awt.Font("Lao MN", 0, 12)); // NOI18N
         jTableEmpDetail.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -166,6 +168,7 @@ public class Home extends javax.swing.JFrame {
             jTableEmpDetail.getColumnModel().getColumn(3).setResizable(false);
         }
 
+        jButtonDeleteEmp.setFont(new java.awt.Font("STSong", 1, 14)); // NOI18N
         jButtonDeleteEmp.setIcon(new javax.swing.ImageIcon("/Users/Regmi/Employee Manager/employeeManager/src/main/resources/delete.png")); // NOI18N
         jButtonDeleteEmp.setText("Delete");
         jButtonDeleteEmp.addActionListener(new java.awt.event.ActionListener() {
@@ -174,6 +177,7 @@ public class Home extends javax.swing.JFrame {
             }
         });
 
+        jButtonNewEmp.setFont(new java.awt.Font("STSong", 1, 14)); // NOI18N
         jButtonNewEmp.setIcon(new javax.swing.ImageIcon("/Users/Regmi/Employee Manager/employeeManager/src/main/resources/create.png")); // NOI18N
         jButtonNewEmp.setText("New Employee");
         jButtonNewEmp.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -187,6 +191,7 @@ public class Home extends javax.swing.JFrame {
             }
         });
 
+        jButtonRep.setFont(new java.awt.Font("STSong", 1, 14)); // NOI18N
         jButtonRep.setIcon(new javax.swing.ImageIcon("/Users/Regmi/Employee Manager/employeeManager/src/main/resources/report.png")); // NOI18N
         jButtonRep.setText("Reports");
         jButtonRep.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -229,12 +234,16 @@ public class Home extends javax.swing.JFrame {
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("Details:"));
+        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Details:", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lao MN", 1, 13))); // NOI18N
+        jPanel3.setFont(new java.awt.Font("Kefa", 1, 24)); // NOI18N
 
+        jLabel1.setFont(new java.awt.Font("Lao MN", 0, 13)); // NOI18N
         jLabel1.setText("Name:");
 
+        jLabel2.setFont(new java.awt.Font("Lao MN", 0, 13)); // NOI18N
         jLabel2.setText("Number of Employees:");
 
+        jTextName.setFont(new java.awt.Font("Lao MN", 0, 13)); // NOI18N
         jTextName.setEnabled(false);
         jTextName.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -243,8 +252,10 @@ public class Home extends javax.swing.JFrame {
         });
 
         jTextEmployee.setEditable(false);
+        jTextEmployee.setFont(new java.awt.Font("Lao MN", 0, 13)); // NOI18N
         jTextEmployee.setEnabled(false);
 
+        jButtonDelete.setFont(new java.awt.Font("STSong", 1, 14)); // NOI18N
         jButtonDelete.setIcon(new javax.swing.ImageIcon("/Users/Regmi/Employee Manager/employeeManager/src/main/resources/delete.png")); // NOI18N
         jButtonDelete.setText("Delete");
         jButtonDelete.addActionListener(new java.awt.event.ActionListener() {
@@ -253,6 +264,7 @@ public class Home extends javax.swing.JFrame {
             }
         });
 
+        jButtonSave.setFont(new java.awt.Font("STSong", 1, 14)); // NOI18N
         jButtonSave.setIcon(new javax.swing.ImageIcon("/Users/Regmi/Employee Manager/employeeManager/src/main/resources/save.png")); // NOI18N
         jButtonSave.setText("Save");
         jButtonSave.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -307,8 +319,10 @@ public class Home extends javax.swing.JFrame {
         );
 
         jLayeredPane1.setBackground(new java.awt.Color(255, 255, 255));
-        jLayeredPane1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jLayeredPane1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
+        jTable_Department.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        jTable_Department.setFont(new java.awt.Font("Lao MN", 0, 12)); // NOI18N
         jTable_Department.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -353,17 +367,19 @@ public class Home extends javax.swing.JFrame {
             jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jLayeredPane1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 392, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButtonNew, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jButtonNew, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
+            .addGroup(jLayeredPane1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 392, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jLayeredPane1Layout.setVerticalGroup(
             jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jLayeredPane1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 461, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jButtonNew, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(17, 17, 17))
         );
@@ -373,9 +389,9 @@ public class Home extends javax.swing.JFrame {
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(29, 29, 29)
+                .addGap(0, 0, 0)
                 .addComponent(jLayeredPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 104, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 133, Short.MAX_VALUE)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(70, 70, 70))
         );
