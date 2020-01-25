@@ -37,6 +37,8 @@ public class Home extends javax.swing.JFrame {
     public Home() {
         initComponents();
         populateEmpTable();
+        jTableEmpDetail.setAutoCreateRowSorter(true);
+        jTable_Department.setAutoCreateRowSorter(true);
     }
     
     public void populateEmpTable() {

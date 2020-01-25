@@ -403,6 +403,7 @@ public class Reports extends javax.swing.JFrame {
                 model.addRow(row);
             }
             sickreport = 1;
+            jTable2.setAutoCreateRowSorter(true);
         }
     }//GEN-LAST:event_jTabbedPane1StateChanged
 
