@@ -7,6 +7,7 @@ package ui;
 
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.util.Calendar;
 import javax.swing.table.DefaultTableModel;
 import model.*;
 
@@ -16,14 +17,27 @@ import model.*;
  */
 public class Reports extends javax.swing.JFrame {
     DataBase database = new DataBase();
-    ArrayList<Employee> employeeList = new ArrayList<>();
+    ArrayList<Employee> employeeListSick = new ArrayList<>();
+    ArrayList<Employee> employeeListDay = new ArrayList<>();
     ArrayList<Department> departmentsList = new ArrayList<>();
     int sickreport = 0;
+    int dayreport = 0;
 
     /**
      * Creates new form Reports
      */
     public Reports() {
+        try {
+            ResultSet myrs = database.getStatement().executeQuery("select * from department");
+            Department tableDepartment;
+            while (myrs.next()){
+                tableDepartment = new Department(myrs.getInt("department_id"), 
+                myrs.getString("name"), myrs.getInt("num_employees"));
+                departmentsList.add(tableDepartment);
+            }
+        } catch (Exception e){
+            System.out.println("Dept Error");
+        }
         initComponents();
     }
 
@@ -275,15 +289,20 @@ public class Reports extends javax.swing.JFrame {
 
         jTable5.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Employee ID", "First Name", "Last Name", "Department", "Employee Type"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jScrollPane5.setViewportView(jTable5);
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
@@ -356,54 +375,108 @@ public class Reports extends javax.swing.JFrame {
     }//GEN-LAST:event_jTabbedPane1MouseClicked
 
     private void jTabbedPane1StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jTabbedPane1StateChanged
-        if (jTabbedPane1.getSelectedIndex() == 1 && sickreport == 0) { //sick days
-            try {
-            ResultSet myrs = database.getStatement().executeQuery("select * from employee_detail");
+        try {
             Employee tableemployee;
-            while (myrs.next()){
-                tableemployee = new Employee(myrs.getInt("employee_id"), 
-                        myrs.getString("name"), myrs.getString("last_name"), myrs.getInt("dep_id"),
-                myrs.getInt("sickdays_aval"), myrs.getInt("emp_type"));
-                employeeList.add(tableemployee);
-            }
-            } catch (Exception e){
-                System.out.println(e);
-            }
             
-            
-            try {
-            ResultSet myrs = database.getStatement().executeQuery("select * from department");
-            Department tableDepartment;
-                while (myrs.next()){
-                    tableDepartment = new Department(myrs.getInt("department_id"), 
-                    myrs.getString("name"), myrs.getInt("num_employees"));
-                    departmentsList.add(tableDepartment);
-                }
-            } catch (Exception e){
-                System.out.println("Dept Error");
-            }
-
-            DefaultTableModel model = (DefaultTableModel)jTable2.getModel(); //sick days
-            model.setRowCount(0);
-            Object[] row = new Object[6];
-            for (int i = 0; i < employeeList.size(); i++) {
-                row[0] = employeeList.get(i).getID();
-                row[1] = employeeList.get(i).getFirstName();
-                row[2] = employeeList.get(i).getLastName();
-                for (int k = 0; k < departmentsList.size(); k++) {
-                    if (employeeList.get(i).getDepID() == departmentsList.get(k).getID()){
-                        row[3] = departmentsList.get(k).getName();
-                        break;
+            if (jTabbedPane1.getSelectedIndex() == 1 && sickreport == 0) { //sick days
+                ResultSet myrs = database.getStatement().executeQuery("select * from employee_detail");
+                try {
+                    while (myrs.next()){
+                        tableemployee = new Employee(myrs.getInt("employee_id"), 
+                                myrs.getString("name"), myrs.getString("last_name"), myrs.getInt("dep_id"),
+                        myrs.getInt("sickdays_aval"), myrs.getInt("emp_type"));
+                        employeeListSick.add(tableemployee);
                     }
+                } catch (Exception e){
+                    System.out.println(e);
                 }
-                int emp_type = employeeList.get(i).getEmp_type();
-                if (emp_type == 0) row[4] = "Full Time"; else if (emp_type == 1) row[4] = "Part Time";
-                else if (emp_type == 2) row[4] = "Contractor"; else if (emp_type == 3) row[4] = "Intern";
-                row[5] = employeeList.get(i).getSick_days();
-                model.addRow(row);
+
+                DefaultTableModel model = (DefaultTableModel)jTable2.getModel(); //sick days
+                model.setRowCount(0);
+                Object[] row = new Object[6];
+                for (int i = 0; i < employeeListSick.size(); i++) {
+                    row[0] = employeeListSick.get(i).getID();
+                    row[1] = employeeListSick.get(i).getFirstName();
+                    row[2] = employeeListSick.get(i).getLastName();
+                    for (int k = 0; k < departmentsList.size(); k++) {
+                        if (employeeListSick.get(i).getDepID() == departmentsList.get(k).getID()){
+                            row[3] = departmentsList.get(k).getName();
+                            break;
+                        }
+                    }
+                    int emp_type = employeeListSick.get(i).getEmp_type();
+                    if (emp_type == 0) row[4] = "Full Time"; else if (emp_type == 1) row[4] = "Part Time";
+                    else if (emp_type == 2) row[4] = "Contractor"; else if (emp_type == 3) row[4] = "Intern";
+                    row[5] = employeeListSick.get(i).getSick_days();
+                    model.addRow(row);
+                }
+                sickreport = 1;
+                jTable2.setAutoCreateRowSorter(true);
+            } else if (jTabbedPane1.getSelectedIndex() == 4 && dayreport == 0) { //day rep
+                Calendar calendar = Calendar.getInstance();
+                int day = calendar.get(Calendar.DAY_OF_WEEK); 
+                String dayName = "";
+                switch (day) {
+                    case Calendar.SUNDAY:
+                        dayName = "sunday";
+                        break;
+                    case Calendar.MONDAY:
+                        dayName = "monday";
+                        break;
+                    case Calendar.TUESDAY:
+                        dayName = "tuesday";
+                        break;
+                    case Calendar.WEDNESDAY:
+                        dayName = "wednesday";
+                        break;
+                    case Calendar.THURSDAY:
+                        dayName = "thursday";
+                        break;
+                    case Calendar.FRIDAY:
+                        dayName = "friday";
+                        break;
+                    case Calendar.SATURDAY:
+                        dayName = "saturday";
+                        break;
+                }
+                ResultSet myrs = database.getStatement().executeQuery("select * from employee_detail "
+                        + "WHERE " + dayName + " = 1");
+                try {
+                    while (myrs.next()){
+                        tableemployee = new Employee(myrs.getInt("employee_id"), 
+                                myrs.getString("name"), myrs.getString("last_name"), myrs.getInt("dep_id"),
+                        myrs.getInt("emp_type"));
+                        employeeListDay.add(tableemployee);
+                    }
+                } catch (Exception e){
+                    System.out.println(e);
+                }
+                
+                
+                DefaultTableModel model = (DefaultTableModel)jTable5.getModel(); //sick days
+                model.setRowCount(0);
+                Object[] row = new Object[5];
+                for (int i = 0; i < employeeListDay.size(); i++) {
+                    row[0] = employeeListDay.get(i).getID();
+                    row[1] = employeeListDay.get(i).getFirstName();
+                    row[2] = employeeListDay.get(i).getLastName();
+                    for (int k = 0; k < departmentsList.size(); k++) {
+                        if (employeeListDay.get(i).getDepID() == departmentsList.get(k).getID()){
+                            row[3] = departmentsList.get(k).getName();
+                            break;
+                        }
+                    }
+                    int emp_type = employeeListDay.get(i).getEmp_type();
+                    if (emp_type == 0) row[4] = "Full Time"; else if (emp_type == 1) row[4] = "Part Time";
+                    else if (emp_type == 2) row[4] = "Contractor"; else if (emp_type == 3) row[4] = "Intern";
+                    model.addRow(row);
+                }
+                dayreport = 1;
+                jTable5.setAutoCreateRowSorter(true);
+                
             }
-            sickreport = 1;
-            jTable2.setAutoCreateRowSorter(true);
+        } catch (Exception e) {
+            System.out.println(e);
         }
     }//GEN-LAST:event_jTabbedPane1StateChanged
 
