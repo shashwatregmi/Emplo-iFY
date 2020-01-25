@@ -5,11 +5,20 @@
  */
 package ui;
 
+import java.sql.ResultSet;
+import java.util.ArrayList;
+import javax.swing.table.DefaultTableModel;
+import model.*;
+
 /**
  *
  * @author Regmi
  */
 public class Reports extends javax.swing.JFrame {
+    DataBase database = new DataBase();
+    ArrayList<Employee> employeeList = new ArrayList<>();
+    ArrayList<Department> departmentsList = new ArrayList<>();
+    int sickreport = 0;
 
     /**
      * Creates new form Reports
@@ -57,6 +66,16 @@ public class Reports extends javax.swing.JFrame {
 
         jTabbedPane1.setBackground(new java.awt.Color(255, 255, 255));
         jTabbedPane1.setFont(new java.awt.Font("Kefa", 2, 14)); // NOI18N
+        jTabbedPane1.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                jTabbedPane1StateChanged(evt);
+            }
+        });
+        jTabbedPane1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTabbedPane1MouseClicked(evt);
+            }
+        });
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -110,17 +129,23 @@ public class Reports extends javax.swing.JFrame {
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
 
+        jTable2.setFont(new java.awt.Font("Lao MN", 0, 12)); // NOI18N
         jTable2.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Employee Number", "First Name", "Last Name", "Department", "Employee Type", "Sick Days Left"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jScrollPane2.setViewportView(jTable2);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -325,6 +350,61 @@ public class Reports extends javax.swing.JFrame {
         home.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_jButton1MouseClicked
+
+    private void jTabbedPane1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTabbedPane1MouseClicked
+        
+    }//GEN-LAST:event_jTabbedPane1MouseClicked
+
+    private void jTabbedPane1StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jTabbedPane1StateChanged
+        if (jTabbedPane1.getSelectedIndex() == 1 && sickreport == 0) { //sick days
+            try {
+            ResultSet myrs = database.getStatement().executeQuery("select * from employee_detail");
+            Employee tableemployee;
+            while (myrs.next()){
+                tableemployee = new Employee(myrs.getInt("employee_id"), 
+                        myrs.getString("name"), myrs.getString("last_name"), myrs.getInt("dep_id"),
+                myrs.getInt("sickdays_aval"), myrs.getInt("emp_type"));
+                employeeList.add(tableemployee);
+            }
+            } catch (Exception e){
+                System.out.println(e);
+            }
+            
+            
+            try {
+            ResultSet myrs = database.getStatement().executeQuery("select * from department");
+            Department tableDepartment;
+                while (myrs.next()){
+                    tableDepartment = new Department(myrs.getInt("department_id"), 
+                    myrs.getString("name"), myrs.getInt("num_employees"));
+                    departmentsList.add(tableDepartment);
+                }
+            } catch (Exception e){
+                System.out.println("Dept Error");
+            }
+
+            DefaultTableModel model = (DefaultTableModel)jTable2.getModel(); //sick days
+            model.setRowCount(0);
+            Object[] row = new Object[6];
+            for (int i = 0; i < employeeList.size(); i++) {
+                row[0] = employeeList.get(i).getID();
+                row[1] = employeeList.get(i).getFirstName();
+                row[2] = employeeList.get(i).getLastName();
+                for (int k = 0; k < departmentsList.size(); k++) {
+                    if (employeeList.get(i).getDepID() == departmentsList.get(k).getID()){
+                        row[3] = departmentsList.get(k).getName();
+                        break;
+                    }
+                }
+                int emp_type = employeeList.get(i).getEmp_type();
+                if (emp_type == 0) row[4] = "Full Time"; else if (emp_type == 1) row[4] = "Part Time";
+                else if (emp_type == 2) row[4] = "Contractor"; else if (emp_type == 3) row[4] = "Intern";
+                row[5] = employeeList.get(i).getSick_days();
+                model.addRow(row);
+            }
+            sickreport = 1;
+        }
+    }//GEN-LAST:event_jTabbedPane1StateChanged
 
     /**
      * @param args the command line arguments
