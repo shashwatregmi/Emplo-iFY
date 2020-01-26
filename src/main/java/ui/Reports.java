@@ -22,6 +22,7 @@ public class Reports extends javax.swing.JFrame {
     ArrayList<Department> departmentsList = new ArrayList<>();
     int sickreport = 0;
     int dayreport = 0;
+    int remote = 0;
 
     /**
      * Creates new form Reports
@@ -286,6 +287,11 @@ public class Reports extends javax.swing.JFrame {
         jCheckBox2.setFont(new java.awt.Font("Lao MN", 0, 13)); // NOI18N
         jCheckBox2.setForeground(new java.awt.Color(153, 153, 153));
         jCheckBox2.setText("Include Remote/On-Call Employees");
+        jCheckBox2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jCheckBox2MouseClicked(evt);
+            }
+        });
 
         jTable5.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -412,33 +418,9 @@ public class Reports extends javax.swing.JFrame {
                 }
                 sickreport = 1;
                 jTable2.setAutoCreateRowSorter(true);
-            } else if (jTabbedPane1.getSelectedIndex() == 4 && dayreport == 0) { //day rep
-                Calendar calendar = Calendar.getInstance();
-                int day = calendar.get(Calendar.DAY_OF_WEEK); 
-                String dayName = "";
-                switch (day) {
-                    case Calendar.SUNDAY:
-                        dayName = "sunday";
-                        break;
-                    case Calendar.MONDAY:
-                        dayName = "monday";
-                        break;
-                    case Calendar.TUESDAY:
-                        dayName = "tuesday";
-                        break;
-                    case Calendar.WEDNESDAY:
-                        dayName = "wednesday";
-                        break;
-                    case Calendar.THURSDAY:
-                        dayName = "thursday";
-                        break;
-                    case Calendar.FRIDAY:
-                        dayName = "friday";
-                        break;
-                    case Calendar.SATURDAY:
-                        dayName = "saturday";
-                        break;
-                }
+            } else if (jTabbedPane1.getSelectedIndex() == 4 && dayreport == 0 && remote == 0) { //day rep
+                employeeListDay = new ArrayList<>();
+                String dayName = getDay();
                 ResultSet myrs = database.getStatement().executeQuery("select * from employee_detail "
                         + "WHERE " + dayName + " = 1");
                 try {
@@ -452,25 +434,8 @@ public class Reports extends javax.swing.JFrame {
                     System.out.println(e);
                 }
                 
+                populateDayTable();
                 
-                DefaultTableModel model = (DefaultTableModel)jTable5.getModel(); //sick days
-                model.setRowCount(0);
-                Object[] row = new Object[5];
-                for (int i = 0; i < employeeListDay.size(); i++) {
-                    row[0] = employeeListDay.get(i).getID();
-                    row[1] = employeeListDay.get(i).getFirstName();
-                    row[2] = employeeListDay.get(i).getLastName();
-                    for (int k = 0; k < departmentsList.size(); k++) {
-                        if (employeeListDay.get(i).getDepID() == departmentsList.get(k).getID()){
-                            row[3] = departmentsList.get(k).getName();
-                            break;
-                        }
-                    }
-                    int emp_type = employeeListDay.get(i).getEmp_type();
-                    if (emp_type == 0) row[4] = "Full Time"; else if (emp_type == 1) row[4] = "Part Time";
-                    else if (emp_type == 2) row[4] = "Contractor"; else if (emp_type == 3) row[4] = "Intern";
-                    model.addRow(row);
-                }
                 dayreport = 1;
                 jTable5.setAutoCreateRowSorter(true);
                 
@@ -479,6 +444,109 @@ public class Reports extends javax.swing.JFrame {
             System.out.println(e);
         }
     }//GEN-LAST:event_jTabbedPane1StateChanged
+
+    private void populateDayTable() {
+        DefaultTableModel model = (DefaultTableModel)jTable5.getModel(); //sick days
+        model.setRowCount(0);
+        Object[] row = new Object[5];
+        for (int i = 0; i < employeeListDay.size(); i++) {
+            row[0] = employeeListDay.get(i).getID();
+            row[1] = employeeListDay.get(i).getFirstName();
+            row[2] = employeeListDay.get(i).getLastName();
+            for (int k = 0; k < departmentsList.size(); k++) {
+                if (employeeListDay.get(i).getDepID() == departmentsList.get(k).getID()){
+                    row[3] = departmentsList.get(k).getName();
+                    break;
+                }
+            }
+            int emp_type = employeeListDay.get(i).getEmp_type();
+            if (emp_type == 0) row[4] = "Full Time"; else if (emp_type == 1) row[4] = "Part Time";
+            else if (emp_type == 2) row[4] = "Contractor"; else if (emp_type == 3) row[4] = "Intern";
+            model.addRow(row);
+        }
+    }
+    
+    private String getDay() {
+          Calendar calendar = Calendar.getInstance();
+        int day = calendar.get(Calendar.DAY_OF_WEEK); 
+        String dayName = "";
+        switch (day) {
+            case Calendar.SUNDAY:
+                dayName = "sunday";
+                break;
+            case Calendar.MONDAY:
+                dayName = "monday";
+                break;
+            case Calendar.TUESDAY:
+                dayName = "tuesday";
+                break;
+            case Calendar.WEDNESDAY:
+                dayName = "wednesday";
+                break;
+            case Calendar.THURSDAY:
+                dayName = "thursday";
+                break;
+            case Calendar.FRIDAY:
+                dayName = "friday";
+                break;
+            case Calendar.SATURDAY:
+                dayName = "saturday";
+                break;
+        }
+        return dayName;
+    }
+    
+    private void jCheckBox2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jCheckBox2MouseClicked
+        Employee tableemployee;
+        if (remote == 0) {
+            employeeListDay = new ArrayList<>();
+            String dayName = getDay();
+            try {
+                ResultSet myrs = database.getStatement().executeQuery("select * from employee_detail "
+                        + "WHERE " + dayName + " = 1" + " OR remote = 1");
+            
+                while (myrs.next()){
+                    tableemployee = new Employee(myrs.getInt("employee_id"), 
+                            myrs.getString("name"), myrs.getString("last_name"), myrs.getInt("dep_id"),
+                    myrs.getInt("emp_type"));
+                    employeeListDay.add(tableemployee);
+                }
+            } catch (Exception e){
+                System.out.println(e);
+            }
+
+            populateDayTable();
+
+            dayreport = 1;
+            remote = 1;
+            jTable5.setAutoCreateRowSorter(true);
+        } else {
+            try {
+                employeeListDay = new ArrayList<>();
+                String dayName = getDay();
+                ResultSet myrs = database.getStatement().executeQuery("select * from employee_detail "
+                        + "WHERE " + dayName + " = 1");
+                try {
+                    while (myrs.next()){
+                        tableemployee = new Employee(myrs.getInt("employee_id"), 
+                                myrs.getString("name"), myrs.getString("last_name"), myrs.getInt("dep_id"),
+                        myrs.getInt("emp_type"));
+                        employeeListDay.add(tableemployee);
+                    }
+                } catch (Exception e){
+                    System.out.println(e);
+                }
+                
+                populateDayTable();
+                
+                dayreport = 1;
+                remote = 0;
+                jTable5.setAutoCreateRowSorter(true);
+            } catch (Exception e) {
+                System.out.println(e);
+            }
+        }
+    }//GEN-LAST:event_jCheckBox2MouseClicked
 
     /**
      * @param args the command line arguments
