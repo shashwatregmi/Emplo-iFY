@@ -6,8 +6,11 @@
 package ui;
 
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
 import model.*;
 
@@ -19,7 +22,10 @@ public class Reports extends javax.swing.JFrame {
     DataBase database = new DataBase();
     ArrayList<Employee> employeeListSick = new ArrayList<>();
     ArrayList<Employee> employeeListDay = new ArrayList<>();
+    ArrayList<Employee> employeeListType = new ArrayList<>();
+    ArrayList<Employee> employeeListSalary = new ArrayList<>();
     ArrayList<Department> departmentsList = new ArrayList<>();
+    
     int sickreport = 0;
     int dayreport = 0;
     int remote = 0;
@@ -189,18 +195,33 @@ public class Reports extends javax.swing.JFrame {
 
         jComboBox2.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
         jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Full Time", "Part Time", "Contactor", "Intern" }));
+        jComboBox2.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jComboBox2ItemStateChanged(evt);
+            }
+        });
+        jComboBox2.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                jComboBox2PropertyChange(evt);
+            }
+        });
 
         jTable3.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Employee ID", "First Name", "Last Name", "Department", "Employee Type"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, true
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jScrollPane3.setViewportView(jTable3);
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
@@ -236,22 +257,35 @@ public class Reports extends javax.swing.JFrame {
 
         jTable4.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Employee ID", "First Name", "Last Name", "Department", "Employee Type", "Salary Amount"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jScrollPane4.setViewportView(jTable4);
 
         jLabel3.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
         jLabel3.setText("Salary Type:");
 
         jComboBox3.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
-        jComboBox3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Annually", "Hourly", "Both" }));
+        jComboBox3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Annually", "Hourly", "Other" }));
+        jComboBox3.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jComboBox3ItemStateChanged(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -548,6 +582,97 @@ public class Reports extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jCheckBox2MouseClicked
 
+    private void jComboBox2PropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_jComboBox2PropertyChange
+
+    }//GEN-LAST:event_jComboBox2PropertyChange
+
+    private void jComboBox2ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jComboBox2ItemStateChanged
+        employeeListType = new ArrayList<>();
+        Employee tableemployee;
+        ResultSet myrs = null;
+        try {
+            myrs = database.getStatement().executeQuery("select * from employee_detail "
+                    + "WHERE " + "emp_type" + " = " + jComboBox2.getSelectedIndex());
+         
+            while (myrs.next()){
+                tableemployee = new Employee(myrs.getInt("employee_id"), 
+                        myrs.getString("name"), myrs.getString("last_name"), myrs.getInt("dep_id"),
+                myrs.getInt("emp_type"));
+                employeeListType.add(tableemployee);
+            }
+        } catch (Exception e){
+            System.out.println(e);
+        }
+        populateTypeTable();
+        jTable3.setAutoCreateRowSorter(true);
+     }//GEN-LAST:event_jComboBox2ItemStateChanged
+
+    private void jComboBox3ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jComboBox3ItemStateChanged
+        employeeListSalary = new ArrayList<>();
+        Employee tableemployee;
+        ResultSet myrs = null;
+        try {
+            myrs = database.getStatement().executeQuery("select * from employee_detail "
+                    + "WHERE " + "pay_type" + " = " + jComboBox3.getSelectedIndex());
+         
+            while (myrs.next()){
+                tableemployee = new Employee(myrs.getInt("employee_id"), 
+                        myrs.getString("name"), myrs.getString("last_name"), myrs.getInt("dep_id"),
+                myrs.getInt("emp_type"), myrs.getDouble("pay"));
+                employeeListSalary.add(tableemployee);
+            }
+        } catch (Exception e){
+            System.out.println(e);
+        }
+        populateSalaryTable();
+        jTable4.setAutoCreateRowSorter(true);
+    }//GEN-LAST:event_jComboBox3ItemStateChanged
+
+    private void populateSalaryTable() {
+        DefaultTableModel model = (DefaultTableModel)jTable4.getModel(); //sick days
+        model.setRowCount(0);
+        Object[] row = new Object[6];
+        for (int i = 0; i < employeeListSalary.size(); i++) {
+            row[0] = employeeListSalary.get(i).getID();
+            row[1] = employeeListSalary.get(i).getFirstName();
+            row[2] = employeeListSalary.get(i).getLastName();
+            for (int k = 0; k < departmentsList.size(); k++) {
+                if (employeeListSalary.get(i).getDepID() == departmentsList.get(k).getID()){
+                    row[3] = departmentsList.get(k).getName();
+                    break;
+                }
+            }
+            int emp_type = employeeListSalary.get(i).getEmp_type();
+            if (emp_type == 0) row[4] = "Full Time"; else if (emp_type == 1) row[4] = "Part Time";
+            else if (emp_type == 2) row[4] = "Contractor"; else if (emp_type == 3) row[4] = "Intern";
+            row[5] = employeeListSalary.get(i).getPay_amt();
+            model.addRow(row);
+        }
+    }
+    
+    
+    private void populateTypeTable() {
+        DefaultTableModel model = (DefaultTableModel)jTable3.getModel(); //sick days
+        model.setRowCount(0);
+        Object[] row = new Object[5];
+        for (int i = 0; i < employeeListType.size(); i++) {
+            row[0] = employeeListType.get(i).getID();
+            row[1] = employeeListType.get(i).getFirstName();
+            row[2] = employeeListType.get(i).getLastName();
+            for (int k = 0; k < departmentsList.size(); k++) {
+                if (employeeListType.get(i).getDepID() == departmentsList.get(k).getID()){
+                    row[3] = departmentsList.get(k).getName();
+                    break;
+                }
+            }
+            int emp_type = employeeListType.get(i).getEmp_type();
+            if (emp_type == 0) row[4] = "Full Time"; else if (emp_type == 1) row[4] = "Part Time";
+            else if (emp_type == 2) row[4] = "Contractor"; else if (emp_type == 3) row[4] = "Intern";
+            model.addRow(row);
+        }
+    }
+
+    
     /**
      * @param args the command line arguments
      */

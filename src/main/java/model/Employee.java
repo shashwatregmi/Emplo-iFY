@@ -49,12 +49,21 @@ public class Employee {
         this.emp_type = emp_type;
     }
     
-     public Employee(int id, String first_name, String last_name, int dep_id, int emp_type){
+    public Employee(int id, String first_name, String last_name, int dep_id, int emp_type){
         this.id = id;
         this.first_name = first_name;
         this.last_name = last_name;
         this.dep_id = dep_id;
         this.emp_type = emp_type;
+    }
+    
+        public Employee(int id, String first_name, String last_name, int dep_id, int emp_type, double pay){
+        this.id = id;
+        this.first_name = first_name;
+        this.last_name = last_name;
+        this.dep_id = dep_id;
+        this.emp_type = emp_type;
+        this.pay_amt = pay;
     }
     
     public Employee(int id, String first_name, String last_name, Date dob, int sin, int dep_id, long phone,
