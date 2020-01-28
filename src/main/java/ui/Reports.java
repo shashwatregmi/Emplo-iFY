@@ -24,6 +24,7 @@ public class Reports extends javax.swing.JFrame {
     ArrayList<Employee> employeeListDay = new ArrayList<>();
     ArrayList<Employee> employeeListType = new ArrayList<>();
     ArrayList<Employee> employeeListSalary = new ArrayList<>();
+    ArrayList<Employee> employeeListDept = new ArrayList<>();
     ArrayList<Department> departmentsList = new ArrayList<>();
     
     int sickreport = 0;
@@ -105,18 +106,28 @@ public class Reports extends javax.swing.JFrame {
 
         jComboBox1.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBox1.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jComboBox1ItemStateChanged(evt);
+            }
+        });
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Employee ID", "First Name", "Last Name", "Designation"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jScrollPane1.setViewportView(jTable1);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -628,6 +639,41 @@ public class Reports extends javax.swing.JFrame {
         jTable4.setAutoCreateRowSorter(true);
     }//GEN-LAST:event_jComboBox3ItemStateChanged
 
+    private void jComboBox1ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jComboBox1ItemStateChanged
+        employeeListDept = new ArrayList<>();
+        Employee tableemployee;
+        ResultSet myrs = null;
+        try {
+            int chosendep = jComboBox1.getSelectedIndex();
+            Department newChoice = departmentsList.get(chosendep);
+            myrs = database.getStatement().executeQuery("select * from employee_detail "
+                    + "WHERE " + "dep_id" + " = " + newChoice.getID());
+         
+            while (myrs.next()){
+                tableemployee = new Employee(myrs.getInt("employee_id"), 
+                        myrs.getString("name"), myrs.getString("last_name"), myrs.getString("designation"));
+                employeeListDept.add(tableemployee);
+            }
+        } catch (Exception e){
+            System.out.println(e);
+        }
+        populateDeptTable();
+        jTable1.setAutoCreateRowSorter(true);
+    }//GEN-LAST:event_jComboBox1ItemStateChanged
+
+    private void populateDeptTable() {
+        DefaultTableModel model = (DefaultTableModel)jTable1.getModel(); //sick days
+        model.setRowCount(0);
+        Object[] row = new Object[4];
+        for (int i = 0; i < employeeListDept.size(); i++) {
+            row[0] = employeeListDept.get(i).getID();
+            row[1] = employeeListDept.get(i).getFirstName();
+            row[2] = employeeListDept.get(i).getLastName();
+            row[3] = employeeListDept.get(i).getDesignation();
+            model.addRow(row);
+        }
+    }
+    
     private void populateSalaryTable() {
         DefaultTableModel model = (DefaultTableModel)jTable4.getModel(); //sick days
         model.setRowCount(0);
