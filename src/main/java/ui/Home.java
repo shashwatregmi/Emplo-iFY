@@ -5,6 +5,7 @@
  */
 package ui;
 
+import java.awt.Image;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
@@ -12,6 +13,11 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import model.DataBase;
 import model.*;
+import java.awt.Toolkit;
+import java.io.File;
+import java.io.IOException;
+import javax.imageio.ImageIO;
+
 
 
 /**

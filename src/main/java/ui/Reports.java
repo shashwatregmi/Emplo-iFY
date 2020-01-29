@@ -47,6 +47,10 @@ public class Reports extends javax.swing.JFrame {
             System.out.println("Dept Error");
         }
         initComponents();
+        jComboBox1.removeAllItems();
+        for (int i = 0; i < departmentsList.size(); i++) {
+            jComboBox1.addItem(departmentsList.get(i).getName());
+        }
     }
 
     /**
@@ -105,7 +109,6 @@ public class Reports extends javax.swing.JFrame {
         jLabel1.setText("Department:");
 
         jComboBox1.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         jComboBox1.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 jComboBox1ItemStateChanged(evt);
@@ -206,6 +209,7 @@ public class Reports extends javax.swing.JFrame {
 
         jComboBox2.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
         jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Full Time", "Part Time", "Contactor", "Intern" }));
+        jComboBox2.setSelectedIndex(-1);
         jComboBox2.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 jComboBox2ItemStateChanged(evt);
@@ -292,6 +296,7 @@ public class Reports extends javax.swing.JFrame {
 
         jComboBox3.setFont(new java.awt.Font("Helvetica Neue", 0, 13)); // NOI18N
         jComboBox3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Annually", "Hourly", "Other" }));
+        jComboBox3.setSelectedIndex(-1);
         jComboBox3.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 jComboBox3ItemStateChanged(evt);
