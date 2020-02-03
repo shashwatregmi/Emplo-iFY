@@ -378,9 +378,13 @@ public class EmployeeDetail extends javax.swing.JFrame {
         jComboBoxPayType.setBackground(new java.awt.Color(255, 255, 255));
         jComboBoxPayType.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
-        jTextdob.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(new java.text.SimpleDateFormat(""))));
+        jTextdob.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(new java.text.SimpleDateFormat("MM/dd/yyyy"))));
 
-        jTextphone.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(new java.text.SimpleDateFormat("MM/dd/yyyy"))));
+        try {
+            jTextphone.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("###-###-####")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
 
         jTextFieldhire.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(new java.text.SimpleDateFormat("MM/dd/yyyy"))));
 
@@ -436,7 +440,7 @@ public class EmployeeDetail extends javax.swing.JFrame {
                                                                 .addComponent(jTextlastname, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 247, Short.MAX_VALUE)))
                                                         .addGap(120, 120, 120))
                                                     .addGroup(jPanel1Layout.createSequentialGroup()
-                                                        .addComponent(jTextphone)
+                                                        .addComponent(jTextphone, javax.swing.GroupLayout.DEFAULT_SIZE, 247, Short.MAX_VALUE)
                                                         .addGap(121, 121, 121))))
                                             .addGroup(jPanel1Layout.createSequentialGroup()
                                                 .addComponent(jLabel8)
@@ -671,7 +675,9 @@ public class EmployeeDetail extends javax.swing.JFrame {
         update.setInt(22, jComboBoxEmpType.getSelectedIndex());
         update.setString(23, jTextAreanote.getText());
         if (jCheckBoxcall.isSelected()) update.setInt(24, 1); else update.setInt(24, 0);
-        update.setLong(25, Long.parseLong(jTextphone.getText()));
+        String phonenum = jTextphone.getText();
+        phonenum = phonenum.replaceAll("-","");
+        update.setLong(25, Long.parseLong(phonenum));
         update.setInt(26, Integer.parseInt(jTextempid.getText()));
    }
     
