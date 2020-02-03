@@ -141,7 +141,7 @@ public class EmployeeDetail extends javax.swing.JFrame {
             } 
             jTextFieldpay.setText(Double.toString(emp.getPay_amt()));
             DateFormat df2 = new SimpleDateFormat("MM/dd/yyyy");
-            String hire = df.format(emp.getHireDate());
+            String hire = df2.format(emp.getHireDate());
             jTextFieldhire.setText(hire);
             jTextFieldsick.setText(Integer.toString(emp.getSick_days()));
             jTextAreanote.setText(emp.getNote());
@@ -378,11 +378,11 @@ public class EmployeeDetail extends javax.swing.JFrame {
         jComboBoxPayType.setBackground(new java.awt.Color(255, 255, 255));
         jComboBoxPayType.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
-        jTextdob.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(new java.text.SimpleDateFormat("MM/dd/yyyy"))));
+        jTextdob.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(new java.text.SimpleDateFormat(""))));
 
         jTextphone.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(new java.text.SimpleDateFormat("MM/dd/yyyy"))));
 
-        jTextFieldhire.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(new java.text.SimpleDateFormat(""))));
+        jTextFieldhire.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(new java.text.SimpleDateFormat("MM/dd/yyyy"))));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);

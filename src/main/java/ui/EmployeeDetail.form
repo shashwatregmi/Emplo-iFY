@@ -649,7 +649,7 @@
             <Component class="javax.swing.JFormattedTextField" name="jTextdob">
               <Properties>
                 <Property name="formatterFactory" type="javax.swing.JFormattedTextField$AbstractFormatterFactory" editor="org.netbeans.modules.form.editors.AbstractFormatterFactoryEditor">
-                  <Format format="MM/dd/yyyy" subtype="-1" type="1"/>
+                  <Format format="" subtype="-1" type="1"/>
                 </Property>
               </Properties>
             </Component>
@@ -663,7 +663,7 @@
             <Component class="javax.swing.JFormattedTextField" name="jTextFieldhire">
               <Properties>
                 <Property name="formatterFactory" type="javax.swing.JFormattedTextField$AbstractFormatterFactory" editor="org.netbeans.modules.form.editors.AbstractFormatterFactoryEditor">
-                  <Format format="" subtype="-1" type="1"/>
+                  <Format format="MM/dd/yyyy" subtype="-1" type="1"/>
                 </Property>
               </Properties>
             </Component>
