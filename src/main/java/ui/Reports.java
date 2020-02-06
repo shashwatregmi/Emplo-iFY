@@ -90,7 +90,6 @@ public class Reports extends javax.swing.JFrame {
         jTable4 = new javax.swing.JTable();
         jLabel3 = new javax.swing.JLabel();
         jComboBox3 = new javax.swing.JComboBox<>();
-        jButton5 = new javax.swing.JButton();
         jButton6 = new javax.swing.JButton();
         jPanel5 = new javax.swing.JPanel();
         jCheckBox2 = new javax.swing.JCheckBox();
@@ -349,18 +348,14 @@ public class Reports extends javax.swing.JFrame {
             }
         });
 
-        jButton5.setFont(new java.awt.Font("STSong", 1, 14)); // NOI18N
-        jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/print (1).png"))); // NOI18N
-        jButton5.setText("Print");
-        jButton5.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jButton5MouseClicked(evt);
-            }
-        });
-
         jButton6.setFont(new java.awt.Font("STSong", 1, 14)); // NOI18N
         jButton6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/print (1).png"))); // NOI18N
         jButton6.setText("Print");
+        jButton6.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton6MouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -377,11 +372,6 @@ public class Reports extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jButton6)))
                 .addContainerGap())
-            .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel4Layout.createSequentialGroup()
-                    .addGap(421, 421, 421)
-                    .addComponent(jButton5)
-                    .addContainerGap(421, Short.MAX_VALUE)))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -394,11 +384,6 @@ public class Reports extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 440, Short.MAX_VALUE)
                 .addContainerGap())
-            .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel4Layout.createSequentialGroup()
-                    .addGap(232, 232, 232)
-                    .addComponent(jButton5)
-                    .addContainerGap(232, Short.MAX_VALUE)))
         );
 
         jTabbedPane1.addTab("Salary Report", jPanel4);
@@ -435,6 +420,11 @@ public class Reports extends javax.swing.JFrame {
         jButton8.setFont(new java.awt.Font("STSong", 1, 14)); // NOI18N
         jButton8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/print (1).png"))); // NOI18N
         jButton8.setText("Print");
+        jButton8.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton8MouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
@@ -769,16 +759,68 @@ public class Reports extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton2MouseClicked
 
     private void jButton3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton3MouseClicked
-        // TODO add your handling code here:
+
+        MessageFormat header = new MessageFormat("Vacation Days Report");
+        MessageFormat footer = new MessageFormat("Page{0,number,integer}");
+        try {
+            jTable2.print(JTable.PrintMode.FIT_WIDTH, header, footer);
+        } catch (Exception e) {
+            System.out.println(e);
+        }
     }//GEN-LAST:event_jButton3MouseClicked
 
     private void jButton4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton4MouseClicked
-        // TODO add your handling code here:
+        depreprot = jComboBox2.getSelectedIndex();
+        String emptype = "";
+        if (depreprot == 0) emptype = "Full Time";
+                else if (depreprot == 1) emptype = "Part Time";
+                else if (depreprot == 2) emptype = "Contractor";
+                else if (depreprot == 3) emptype = "Intern";
+
+        MessageFormat header = new MessageFormat(emptype + " Employee Report");
+        MessageFormat footer = new MessageFormat("Page{0,number,integer}");
+        try {
+            jTable3.print(JTable.PrintMode.FIT_WIDTH, header, footer);
+        } catch (Exception e) {
+            System.out.println(e);
+        }
     }//GEN-LAST:event_jButton4MouseClicked
 
-    private void jButton5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton5MouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton5MouseClicked
+    private void jButton6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton6MouseClicked
+        depreprot = jComboBox3.getSelectedIndex();
+        String paytype = "";
+        if (depreprot == 0) paytype = "Annualy";
+                else if (depreprot == 1) paytype = "Hourly";
+                else if (depreprot == 2) paytype = "Other";
+
+        MessageFormat header = new MessageFormat(paytype + " Salarywise Employee Report");
+        MessageFormat footer = new MessageFormat("Page{0,number,integer}");
+        try {
+            jTable4.print(JTable.PrintMode.FIT_WIDTH, header, footer);
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }//GEN-LAST:event_jButton6MouseClicked
+
+    private void jButton8MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton8MouseClicked
+        MessageFormat footer = new MessageFormat("Page{0,number,integer}");
+        if (jCheckBox2.isSelected()){
+            MessageFormat header1 = new MessageFormat("Employees Working Today (Includes Remote)");
+            try {
+            jTable5.print(JTable.PrintMode.FIT_WIDTH, header1, footer);
+            } catch (Exception e) {
+                System.out.println(e);
+            }
+        } else {
+            MessageFormat header2 = new MessageFormat("Employees Working Today");
+            try {
+            jTable5.print(JTable.PrintMode.FIT_WIDTH, header2, footer);
+            } catch (Exception e) {
+                System.out.println(e);
+            }
+        }
+        
+    }//GEN-LAST:event_jButton8MouseClicked
 
     private void populateDeptTable() {
         DefaultTableModel model = (DefaultTableModel)jTable1.getModel(); //sick days
@@ -878,7 +920,6 @@ public class Reports extends javax.swing.JFrame {
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
     private javax.swing.JButton jButton7;
     private javax.swing.JButton jButton8;
