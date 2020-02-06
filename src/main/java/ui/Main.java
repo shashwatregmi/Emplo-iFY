@@ -32,7 +32,7 @@ public class Main {
                 System.out.println("Error!");
             }
         } catch (Exception e) {
-            System.out.println(e);
+            System.out.println("Database connection error!");   
         }
     }
 

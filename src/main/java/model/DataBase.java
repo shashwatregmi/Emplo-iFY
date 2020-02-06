@@ -22,7 +22,7 @@ public class DataBase {
             dbConnect = DriverManager.getConnection("jdbc:mysql://localhost:3306/employee_manager", "root", "MySQL2019");
             dbStat = dbConnect.createStatement();
         } catch (Exception e) {
-            System.out.println("Databse Error");
+            System.out.println("Databse Connection Error");
         }
     }
     
