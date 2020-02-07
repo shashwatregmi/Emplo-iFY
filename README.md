@@ -14,7 +14,7 @@ Emplo-iFY gives users the ability to easily analyze data through numerous report
 **Application Launch:**
 ![](Empoly-iFY%20Screenshots/Main.png)
 
-**Settings Panel which allows user to configure organizational departments.:**
+**Settings Panel - allows users to configure organizational departments:**
 ![](Empoly-iFY%20Screenshots/Settings%20Page.png)
 
 
