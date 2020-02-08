@@ -646,9 +646,10 @@ public class EmployeeDetail extends javax.swing.JFrame {
         update.setString(1, jTextfirstname.getText());
         update.setString(2, jTextlastname.getText());
         update.setString(3, jTextFieldgender.getText());
-        SimpleDateFormat sdf1 = new SimpleDateFormat("MM/dd/YYYY");
-        java.util.Date date = sdf1.parse(jTextdob.getText());
-        java.sql.Date sqlStartDate = new java.sql.Date(date.getTime());
+        SimpleDateFormat sdf1 = new SimpleDateFormat("MM/dd/yyyy");
+        java.util.Date dateemp = sdf1.parse(jTextdob.getText());
+        System.out.println(dateemp);
+        java.sql.Date sqlStartDate = new java.sql.Date(dateemp.getTime());
         update.setDate(4, sqlStartDate);
         update.setInt(5, Integer.parseInt(jTextsin.getText()));
         update.setString(6, jtextEmail.getText());
@@ -665,9 +666,9 @@ public class EmployeeDetail extends javax.swing.JFrame {
         if (jCheckBoxfri.isSelected()) update.setInt(15, 1); else update.setInt(15, 0);
         if (jCheckBoxsat.isSelected()) update.setInt(16, 1); else update.setInt(16, 0);
         if (jCheckBoxsun.isSelected()) update.setInt(17, 1); else update.setInt(17, 0);
-        sdf1 = new SimpleDateFormat("MM/dd/YYYY");
-        date = sdf1.parse(jTextFieldhire.getText());
-        sqlStartDate = new java.sql.Date(date.getTime());
+        sdf1 = new SimpleDateFormat("MM/dd/yyyy");
+        dateemp = sdf1.parse(jTextFieldhire.getText());
+        sqlStartDate = new java.sql.Date(dateemp.getTime());
         update.setDate(18, sqlStartDate);
         update.setInt(19, Integer.parseInt(jTextFieldsick.getText()));
         if (jRadioButtonfire.isSelected()) update.setInt(20, 1); else update.setInt(20, 0);

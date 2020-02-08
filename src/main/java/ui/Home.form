@@ -80,16 +80,16 @@
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                          <Component id="jScrollPane2" min="-2" pref="861" max="-2" attributes="0"/>
                           <Group type="102" attributes="0">
                               <Component id="jButtonRep" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace min="-2" pref="272" max="-2" attributes="0"/>
-                              <Component id="jButtonDeleteEmp" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="32767" attributes="0"/>
+                              <Component id="jButtonDeleteEmp" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="271" max="-2" attributes="0"/>
                               <Component id="jButtonNewEmp" min="-2" max="-2" attributes="0"/>
                           </Group>
-                          <Component id="jScrollPane2" min="-2" pref="841" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace pref="44" max="32767" attributes="0"/>
+                      <EmptySpace pref="24" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>

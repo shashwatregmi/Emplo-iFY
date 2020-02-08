@@ -45,8 +45,6 @@ public class Home extends javax.swing.JFrame {
     public Home() {
         initComponents();
         populateEmpTable();
-        jTableEmpDetail.setAutoCreateRowSorter(true);
-        jTable_Department.setAutoCreateRowSorter(true);
     }
     
     public void populateEmpTable() {
@@ -218,14 +216,14 @@ public class Home extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(25, 25, 25)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 861, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jButtonRep)
-                        .addGap(272, 272, 272)
-                        .addComponent(jButtonDeleteEmp)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButtonNewEmp))
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 841, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(44, Short.MAX_VALUE))
+                        .addComponent(jButtonDeleteEmp)
+                        .addGap(271, 271, 271)
+                        .addComponent(jButtonNewEmp)))
+                .addContainerGap(24, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
