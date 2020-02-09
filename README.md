@@ -9,10 +9,10 @@ Employee Management System optimized for record-keeping and analysis of employee
 Emplo-iFY gives users the ability to easily analyze data through numerous reports. These reports are generated through user commands - on the Reports window - and have functionality such as sort in order to make them clear and coherent. Currently the following reports are avaliable:
 
 1) [Department Specific Employee Report](#reports)
-2) [Employee Vacation Days Report]
-3) [Employee Type Report (filterable by employee work status)]
-4) [Salary Report (filterable by salary types)]
-5) [Today's Working Employees Report]
+2) [Employee Vacation Days Report](#reports)
+3) [Employee Type Report (filterable by employee work status)](#reports)
+4) [Salary Report (filterable by salary types)](#reports)
+5) [Today's Working Employees Report](#reports)
 
 
 ## Program Screenshots:
@@ -31,7 +31,7 @@ Emplo-iFY gives users the ability to easily analyze data through numerous report
 
 ## Reports:
 <img src="Empoly-iFY%20Screenshots/ITRep.png" width=100%>
-<img src="Empoly-iFY%20Screenshots/VacRep.png" width=100%>
+<img src="Empoly-iFY%20Screenshots/VacReport.png" width=100%>
 <img src="Empoly-iFY%20Screenshots/EmpTypRep.png" width=100%>
 <img src="Empoly-iFY%20Screenshots/SalaryRep.png" width=100%>
 <img src="Empoly-iFY%20Screenshots/DayRep.png" width=100%>
