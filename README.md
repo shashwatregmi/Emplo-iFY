@@ -20,7 +20,7 @@ Emplo-iFY gives users the ability to easily analyze data through numerous report
 **Application Launch:**
 ![](Empoly-iFY%20Screenshots/Main.png)
 
-**Home Page - gives users ability to quickly view/manage employees as well as open Reports:**
+**Home Page - gives users ability to quickly view/manage employees as well as launch Reports:**
 <img src="Empoly-iFY%20Screenshots/Home.png" width=100%> 
 <img src="Empoly-iFY%20Screenshots/DeleteEmp.png" width=100%>                                                                                                                                                             
 **Settings Panel - allows users to configure organizational departments:**
