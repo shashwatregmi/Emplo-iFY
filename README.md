@@ -12,7 +12,7 @@ Emplo-iFY gives users the ability to easily analyze data through numerous report
 2) [Employee Vacation Days Report]
 3) [Employee Type Report (filterable by employee work status)]
 4) [Salary Report (filterable by salary types)]
-4) [Today's Working Employees Report]
+5) [Today's Working Employees Report]
 
 
 ## Program Screenshots:
@@ -21,10 +21,8 @@ Emplo-iFY gives users the ability to easily analyze data through numerous report
 ![](Empoly-iFY%20Screenshots/Main.png)
 
 **Home Page - gives users ability to quickly view/manage employees as well as open Reports:**
-![](Empoly-iFY%20Screenshots/Home.png)
-
-![](Empoly-iFY%20Screenshots/DeleteEmp.png)
-
+<img src="Empoly-iFY%20Screenshots/Home.png" width=100%> 
+<img src="Empoly-iFY%20Screenshots/DeleteEmp.png" width=100%>                                                                                                                                                             
 **Settings Panel - allows users to configure organizational departments:**
 ![](Empoly-iFY%20Screenshots/Settings%20Page.png)
 
@@ -32,4 +30,10 @@ Emplo-iFY gives users the ability to easily analyze data through numerous report
 ![](Empoly-iFY%20Screenshots/Edit%20Employee.png)
 
 ## Reports:
-<img src="Empoly-iFY%20Screenshots/Splash.png" width=50%>
+<img src="Empoly-iFY%20Screenshots/ITRep.png" width=100%>
+<img src="Empoly-iFY%20Screenshots/VacRep.png" width=100%>
+<img src="Empoly-iFY%20Screenshots/EmpTypRep.png" width=100%>
+<img src="Empoly-iFY%20Screenshots/SalaryRep.png" width=100%>
+<img src="Empoly-iFY%20Screenshots/DayRep.png" width=100%>
+
+
